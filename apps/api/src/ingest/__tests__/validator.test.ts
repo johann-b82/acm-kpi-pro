@@ -34,7 +34,8 @@ describe("validateAllRows — fail-on-all error collection (IN-11)", () => {
   test("error includes 1-based row number", async () => {
     const rows = [buildBaseRow({ "Typ": "INVALID" })];
     const result = await validateAllRows(rows);
-    expect(result.errors![0].row).toBe(2); // Header=1, data starts=2
+    const firstError = result.errors![0];
+    expect(firstError?.row).toBe(2); // Header=1, data starts=2
   });
 
   test("mixed valid + invalid: valid rows still collected", async () => {

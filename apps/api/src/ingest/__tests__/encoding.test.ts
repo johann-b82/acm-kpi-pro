@@ -5,7 +5,10 @@ import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-const SAMPLE = resolve(__dirname, "../../../../samples/LagBes-sample.csv");
+// Use the CP1252-encoded sample — the real production encoding from Apollo NTS.
+// A UTF-8 copy is at samples/LagBes-sample.csv (for human readability),
+// but the parser always decodes as CP1252, so encoding tests must use the binary file.
+const SAMPLE = resolve(__dirname, "../../../../../samples/LagBes-sample-cp1252.csv");
 
 describe("Windows-1252 encoding (Pitfall #2)", () => {
   test("µµµµ round-trips without U+FFFD replacement char", async () => {

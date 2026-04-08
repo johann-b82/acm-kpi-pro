@@ -5,7 +5,10 @@ import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-const SAMPLE = resolve(__dirname, "../../../../samples/LagBes-sample.csv");
+// Use the CP1252-encoded sample — the real production encoding from Apollo NTS.
+// A UTF-8 copy is at samples/LagBes-sample.csv (for human readability),
+// but the parser always decodes as CP1252, so tests must use the binary file.
+const SAMPLE = resolve(__dirname, "../../../../../samples/LagBes-sample-cp1252.csv");
 
 describe("parseAndRemergeLagBes — decimal-comma re-merge (Pitfall #1)", () => {
   test("parses sample file with exactly 12 rows", async () => {
