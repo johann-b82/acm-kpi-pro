@@ -1,0 +1,23 @@
+{
+  "name": "acm-kpi-pro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "workspaces": ["apps/api", "apps/frontend", "apps/worker", "packages/core"],
+  "scripts": {
+    "dev": "concurrently \"npm -w apps/frontend run dev\" \"npm -w apps/api run dev\"",
+    "build": "npm -w packages/core run build && npm -w apps/api run build && npm -w apps/frontend run build",
+    "test": "npm -w apps/api run test && npm -w apps/frontend run test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "db:migrate": "npm -w apps/api run db:migrate"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.0",
+    "typescript": "^6.0.2",
+    "concurrently": "^8.2.0"
+  }
+}
