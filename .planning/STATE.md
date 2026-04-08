@@ -3,11 +3,11 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T15:31:11.358Z"
+last_updated: "2026-04-08T17:09:14.805Z"
 progress:
   total_phases: 8
   completed_phases: 1
-  total_plans: 2
+  total_plans: 3
   completed_plans: 1
 ---
 
@@ -116,6 +116,7 @@ From `.planning/config.json`:
 - [Phase 02-05]: Mid-swap atomicity test uses execute() failure — simulates TRUNCATE stock_rows failure with 3 rows
 - [Phase 02-csv-ingestion-core]: ingestLagBesFile opts.db injection pattern — avoids DATABASE_URL throw at module load; enables Vitest test isolation without mock hoisting issues in forks pool
 - [Phase 02-csv-ingestion-core]: FeedRegistry as Map singleton in registry.ts — Phase 3+ adds feeds via feedRegistry.set() without modifying existing ingest code (KPI-10)
+- [Phase 03-kpi-layer-dashboard]: Phase 1 KpiSummary stub (types/kpi.ts) removed; replaced by kpi/types.ts with full Phase 3 DTO set
 
 ## Performance Metrics
 
@@ -133,3 +134,4 @@ From `.planning/config.json`:
 | Phase 02 P02-04 | 50 | 2 tasks | 10 files |
 | Phase 02-csv-ingestion-core P02-05 | 5 | 2 tasks | 2 files |
 | Phase 02-csv-ingestion-core P02-06 | 11 | 2 tasks | 6 files |
+| Phase 03-kpi-layer-dashboard P03-02 | 495 | 2 tasks | 3 files |

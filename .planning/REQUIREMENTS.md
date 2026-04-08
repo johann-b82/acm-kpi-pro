@@ -24,20 +24,20 @@
 ### Data Model & KPI Layer (KPI)
 
 - [x] **KPI-01**: PostgreSQL schema stores parsed stock rows with strong types (numeric for quantities and values, parsed dates, enums for `Typ`).
-- [ ] **KPI-02**: A materialized view pre-computes dashboard KPIs and is refreshed in the same transaction as an import.
-- [ ] **KPI-03**: Total inventory value (€) — sum of `Wert mit Abw.` — is computed and queryable.
-- [ ] **KPI-04**: Days-on-hand / coverage is computed from `Reichw.Mon.` and `Durch.Verbr`.
-- [ ] **KPI-05**: Slow-mover / dead-stock aging buckets (0-6mo, 6-12mo, 1-2yr, 2yr+) are computed from `Lagerabgang Dat` / `letzt.Zugang`.
-- [ ] **KPI-06**: Stockout and low-stock list is computed from `Bestand ≤ 0` and below-threshold stock.
-- [ ] **KPI-07**: ABC class distribution is derived from `ABC-Kennz. VK`, treating blank as C.
-- [ ] **KPI-08**: Inventory turnover ratio is computed from `Umsatz Me J` against current stock.
-- [ ] **KPI-09**: Devaluation / write-down summary (€ and % of total value) is computed from `Abwert%`.
+- [x] **KPI-02**: A materialized view pre-computes dashboard KPIs and is refreshed in the same transaction as an import.
+- [x] **KPI-03**: Total inventory value (€) — sum of `Wert mit Abw.` — is computed and queryable.
+- [x] **KPI-04**: Days-on-hand / coverage is computed from `Reichw.Mon.` and `Durch.Verbr`.
+- [x] **KPI-05**: Slow-mover / dead-stock aging buckets (0-6mo, 6-12mo, 1-2yr, 2yr+) are computed from `Lagerabgang Dat` / `letzt.Zugang`.
+- [x] **KPI-06**: Stockout and low-stock list is computed from `Bestand ≤ 0` and below-threshold stock.
+- [x] **KPI-07**: ABC class distribution is derived from `ABC-Kennz. VK`, treating blank as C.
+- [x] **KPI-08**: Inventory turnover ratio is computed from `Umsatz Me J` against current stock.
+- [x] **KPI-09**: Devaluation / write-down summary (€ and % of total value) is computed from `Abwert%`.
 - [ ] **KPI-10**: The KPI layer is extensible — adding a future feed (e.g. scrap rate) does not require rewriting the existing ingestion or dashboard code, only registering a new feed + tables + KPI definitions.
 
 ### Dashboard (DASH)
 
-- [ ] **DASH-01**: Dashboard route shows a default "Executive view" with 4-6 KPI cards above the fold, no filters required.
-- [ ] **DASH-02**: Each KPI card shows the value, a label, and a color-coded status (green / yellow / red) based on thresholds.
+- [x] **DASH-01**: Dashboard route shows a default "Executive view" with 4-6 KPI cards above the fold, no filters required.
+- [x] **DASH-02**: Each KPI card shows the value, a label, and a color-coded status (green / yellow / red) based on thresholds.
 - [ ] **DASH-03**: Dashboard shows a prominent "Last updated" timestamp and warns with a visible banner if data is older than 30 minutes (yellow) or 2 hours (red).
 - [ ] **DASH-04**: Dashboard polls for new data every 30 seconds and refreshes without a full page reload.
 - [ ] **DASH-05**: Users can slice and filter by warehouse (`Lagername`), product group (`WGR`/`ProdGrp`), ABC class, and article type (`Typ`).
@@ -201,17 +201,17 @@
 | IN-12 | Phase 2 | Complete |
 | IN-13 | Phase 2 | Complete |
 | KPI-01 | Phase 2 | Complete |
-| KPI-02 | Phase 3 | Pending |
-| KPI-03 | Phase 3 | Pending |
-| KPI-04 | Phase 3 | Pending |
-| KPI-05 | Phase 3 | Pending |
-| KPI-06 | Phase 3 | Pending |
-| KPI-07 | Phase 3 | Pending |
-| KPI-08 | Phase 3 | Pending |
-| KPI-09 | Phase 3 | Pending |
+| KPI-02 | Phase 3 | Complete |
+| KPI-03 | Phase 3 | Complete |
+| KPI-04 | Phase 3 | Complete |
+| KPI-05 | Phase 3 | Complete |
+| KPI-06 | Phase 3 | Complete |
+| KPI-07 | Phase 3 | Complete |
+| KPI-08 | Phase 3 | Complete |
+| KPI-09 | Phase 3 | Complete |
 | KPI-10 | Phase 2 | Pending |
-| DASH-01 | Phase 3 | Pending |
-| DASH-02 | Phase 3 | Pending |
+| DASH-01 | Phase 3 | Complete |
+| DASH-02 | Phase 3 | Complete |
 | DASH-03 | Phase 3 | Pending |
 | DASH-04 | Phase 3 | Pending |
 | DASH-05 | Phase 3 | Pending |
