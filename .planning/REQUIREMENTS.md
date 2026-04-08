@@ -9,17 +9,17 @@
 
 - [ ] **IN-01**: The system accepts CSV/TXT exports of the Apollo NTS `LagBes` warehouse stock file via browser upload (drag-and-drop + file picker).
 - [ ] **IN-02**: The system accepts the same file via an SMB folder watcher that watches a mounted share and processes new files automatically.
-- [ ] **IN-03**: Browser upload and folder watcher converge on a single ingestion code path (same parser, same validation, same DB write).
-- [ ] **IN-04**: The parser correctly handles Windows-1252 encoding and round-trips umlauts, ß, and `µ` characters without mojibake.
-- [ ] **IN-05**: The parser correctly handles the German-decimal-comma-breaks-semicolon-delimiter quirk documented in `samples/README.md`, and passes a golden-file test against `samples/LagBes-sample.csv`.
-- [ ] **IN-06**: The parser correctly interprets `DD.MM.YY` dates, inferring the century sensibly.
-- [ ] **IN-07**: The parser accepts both `.csv` and `.txt` file extensions.
+- [x] **IN-03**: Browser upload and folder watcher converge on a single ingestion code path (same parser, same validation, same DB write).
+- [x] **IN-04**: The parser correctly handles Windows-1252 encoding and round-trips umlauts, ß, and `µ` characters without mojibake.
+- [x] **IN-05**: The parser correctly handles the German-decimal-comma-breaks-semicolon-delimiter quirk documented in `samples/README.md`, and passes a golden-file test against `samples/LagBes-sample.csv`.
+- [x] **IN-06**: The parser correctly interprets `DD.MM.YY` dates, inferring the century sensibly.
+- [x] **IN-07**: The parser accepts both `.csv` and `.txt` file extensions.
 - [ ] **IN-08**: The folder watcher detects new files only after they are stable (size + mtime unchanged for ≥1 second) to avoid ingesting partially-written files.
 - [ ] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
 - [x] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
-- [ ] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
+- [x] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
 - [ ] **IN-12**: The ingestion pipeline completes a typical-size file (10k rows) in under 60 seconds end-to-end on the target host.
-- [ ] **IN-13**: Negative stock values are preserved as legitimate data, not rejected or zeroed.
+- [x] **IN-13**: Negative stock values are preserved as legitimate data, not rejected or zeroed.
 
 ### Data Model & KPI Layer (KPI)
 
@@ -137,7 +137,7 @@
 
 ### Testing (TEST)
 
-- [ ] **TEST-01**: The CSV parser has unit tests covering the decimal-comma quirk, encoding, dates, and negative stock, with `samples/LagBes-sample.csv` as the golden fixture.
+- [x] **TEST-01**: The CSV parser has unit tests covering the decimal-comma quirk, encoding, dates, and negative stock, with `samples/LagBes-sample.csv` as the golden fixture.
 - [ ] **TEST-02**: Core KPI calculation functions have unit tests.
 - [ ] **TEST-03**: At least one end-to-end Playwright test covers: login → upload file → dashboard shows updated KPI.
 - [ ] **TEST-04**: A CI check fails the build when `de.json` and `en.json` diverge.
@@ -189,17 +189,17 @@
 |---|---|---|
 | IN-01 | Phase 4 | Pending |
 | IN-02 | Phase 5 | Pending |
-| IN-03 | Phase 2 | Pending |
-| IN-04 | Phase 2 | Pending |
-| IN-05 | Phase 2 | Pending |
-| IN-06 | Phase 2 | Pending |
-| IN-07 | Phase 2 | Pending |
+| IN-03 | Phase 2 | Complete |
+| IN-04 | Phase 2 | Complete |
+| IN-05 | Phase 2 | Complete |
+| IN-06 | Phase 2 | Complete |
+| IN-07 | Phase 2 | Complete |
 | IN-08 | Phase 5 | Pending |
 | IN-09 | Phase 2 | Pending |
 | IN-10 | Phase 2 | Complete |
-| IN-11 | Phase 2 | Pending |
+| IN-11 | Phase 2 | Complete |
 | IN-12 | Phase 2 | Pending |
-| IN-13 | Phase 2 | Pending |
+| IN-13 | Phase 2 | Complete |
 | KPI-01 | Phase 2 | Complete |
 | KPI-02 | Phase 3 | Pending |
 | KPI-03 | Phase 3 | Pending |
@@ -278,7 +278,7 @@
 | SEC-03 | Phase 1 | Complete (01-05) |
 | SEC-04 | Phase 1 | Pending |
 | SEC-05 | Phase 8 | Pending |
-| TEST-01 | Phase 2 | Pending |
+| TEST-01 | Phase 2 | Complete |
 | TEST-02 | Phase 3 | Pending |
 | TEST-03 | Phase 4 | Pending |
 | TEST-04 | Phase 6 | Pending |

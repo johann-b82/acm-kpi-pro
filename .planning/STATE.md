@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T14:35:59.539Z"
+last_updated: "2026-04-08T15:07:26.254Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -109,6 +109,8 @@ From `.planning/config.json`:
 - [02-03]: FeedParser.db typed as unknown — keeps @acm-kpi/core dep-free (no drizzle import)
 - [02-03]: FeedRegistry = Map<string, FeedParser> type alias; callers instantiate with new Map()
 - [02-03]: tsc --build --force needed after manual dist cleanup in TypeScript 6.0.2 (incremental cache mismatch)
+- [Phase 02]: surplus-aware decimal-comma re-merge with per-column maxFractionalDigits prevents greedy merges on zero-value rows
+- [Phase 02]: CP1252 binary test fixture (LagBes-sample-cp1252.csv) required because UTF-8 sample mojibakes through cp1252 decode pipeline
 
 ## Performance Metrics
 
@@ -123,3 +125,4 @@ From `.planning/config.json`:
 *Last updated: 2026-04-08 after 02-03 FeedParser interface and ingest types*
 | Phase 02-csv-ingestion-core P02-02 | 45 | 2 tasks | 6 files |
 | 02 | 03 | ~10 min | 2/2 | 2 |
+| Phase 02 P02-04 | 50 | 2 tasks | 10 files |
