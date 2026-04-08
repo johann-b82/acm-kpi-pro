@@ -2,11 +2,23 @@ import { BookOpen, LogOut, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
 
+interface HeaderProps {
+  /** ISO 8601 timestamp of last successful import. Plan 03-07 renders this. */
+  lastUpdatedAt?: string | null;
+  /** Callback for the force-refresh button. Plan 03-07 adds the button to the header. */
+  onForceRefresh?: () => void;
+  /** True while a background refetch is in progress. Plan 03-07 shows a spinner. */
+  isRefreshing?: boolean;
+}
+
 /**
  * App header: ACM logo (BRAND-01) + upload + docs icon buttons (UP-01, DOCS-01 scaffolds)
  * + logout button.
+ *
+ * Optional props (lastUpdatedAt, onForceRefresh, isRefreshing) are accepted here
+ * but not yet rendered — Plan 03-07 adds the LastUpdatedBadge and Refresh button.
  */
-export function Header() {
+export function Header(_props: HeaderProps = {}) {
   const { user, logout } = useAuth();
 
   return (
