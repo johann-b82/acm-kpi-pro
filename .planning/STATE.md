@@ -12,9 +12,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-08)
 
 - **Milestone:** v1 (initial release)
 - **Phases completed:** 0 / 8
-- **Phase in progress:** Phase 1 — Foundation & Auth (Plans 4, 5, 6 complete)
-- **Last completed plan:** 01-05 LDAP auth + iron-session + RBAC
-- **Next action:** Plan 07 — Caddy + Docker Compose (or verify Phase 1 before proceeding)
+- **Phase in progress:** Phase 1 — Foundation & Auth (Plans 4, 5, 6, 7 complete)
+- **Last completed plan:** 01-07 Caddy reverse proxy + docker-compose + TLS + security headers
+- **Next action:** Phase 1 verification (all 7 plans complete)
 
 ## Artifacts
 
@@ -50,11 +50,11 @@ Non-blocking, but needed before implementation of the relevant phase:
 - `.planning/` tracked in git: yes (per config `commit_docs: true`)
 - Recent commits:
   - `318b2cd` docs: add roadmap and phase traceability
-  - `4ba3ccf` docs: define v1 requirements
-  - `eddbf50` docs: add research summary
-  - `d3905bc` docs: add domain research
-  - `fab382d` chore: add project config
-  - `d96bc68` docs: initialize project
+  - `ee3bc5b` feat(01-07): Caddy, docker-compose.yml, Caddyfile, TLS, security headers, smoke test
+  - `5059494` feat(01-07): multi-stage Dockerfiles (api, frontend), entrypoint.sh
+  - `b1d2944` docs(01-05): complete LDAP auth + session plan SUMMARY
+  - `a302252` feat(01-05): LDAP auth, iron-session, RBAC
+  - `4aa4209` feat(01): React frontend shell
 
 ## Workflow Configuration
 
@@ -84,6 +84,10 @@ From `.planning/config.json`:
 | 01-06 | Vite 8 uses rolldown; manualChunks must be a function — object form raises TypeError |
 | 01-06 | vite-env.d.ts required for tsc to accept CSS side-effect imports in strict mode |
 | 01-06 | POST /api/v1/auth/login now live-testable (Plan 05 complete) |
+| 01-07 | Referrer-Policy: strict-origin-when-cross-origin (stronger than plan draft's same-origin) |
+| 01-07 | entrypoint.sh pg check uses ESM (--input-type=module) — apps/api type:module, require() would fail |
+| 01-07 | HSTS preload omitted — requires hstspreload.org registration; not for internal on-prem app |
+| 01-07 | Docker network internal:false — Caddy tls internal needs external CA resolution; set true in air-gapped prod |
 
 ## Performance Metrics
 
@@ -92,6 +96,7 @@ From `.planning/config.json`:
 | 01 | 04 | ~25 min | 2/2 | 5 |
 | 01 | 05 | ~90 min | 2/2 | 11 |
 | 01 | 06 | ~15 min | 2/2 | 20 |
+| 01 | 07 | ~25 min | 3/3 | 8 |
 
 ---
-*Last updated: 2026-04-08 after 01-05 LDAP auth + iron-session + RBAC*
+*Last updated: 2026-04-08 after 01-07 Caddy + docker-compose + TLS + security headers*
