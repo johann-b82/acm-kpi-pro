@@ -185,10 +185,106 @@
 
 ## Traceability
 
-Populated during roadmap creation.
+| Requirement | Phase | Status |
+|---|---|---|
+| IN-01 | Phase 4 | Pending |
+| IN-02 | Phase 5 | Pending |
+| IN-03 | Phase 2 | Pending |
+| IN-04 | Phase 2 | Pending |
+| IN-05 | Phase 2 | Pending |
+| IN-06 | Phase 2 | Pending |
+| IN-07 | Phase 2 | Pending |
+| IN-08 | Phase 5 | Pending |
+| IN-09 | Phase 2 | Pending |
+| IN-10 | Phase 2 | Pending |
+| IN-11 | Phase 2 | Pending |
+| IN-12 | Phase 2 | Pending |
+| IN-13 | Phase 2 | Pending |
+| KPI-01 | Phase 2 | Pending |
+| KPI-02 | Phase 3 | Pending |
+| KPI-03 | Phase 3 | Pending |
+| KPI-04 | Phase 3 | Pending |
+| KPI-05 | Phase 3 | Pending |
+| KPI-06 | Phase 3 | Pending |
+| KPI-07 | Phase 3 | Pending |
+| KPI-08 | Phase 3 | Pending |
+| KPI-09 | Phase 3 | Pending |
+| KPI-10 | Phase 2 | Pending |
+| DASH-01 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Pending |
+| DASH-03 | Phase 3 | Pending |
+| DASH-04 | Phase 3 | Pending |
+| DASH-05 | Phase 3 | Pending |
+| DASH-06 | Phase 3 | Pending |
+| DASH-07 | Phase 3 | Pending |
+| DASH-08 | Phase 3 | Pending |
+| DASH-09 | Phase 6 | Pending |
+| DASH-10 | Phase 6 | Pending |
+| DASH-11 | Phase 3 | Pending |
+| UP-01 | Phase 4 | Pending |
+| UP-02 | Phase 4 | Pending |
+| UP-03 | Phase 4 | Pending |
+| UP-04 | Phase 4 | Pending |
+| UP-05 | Phase 4 | Pending |
+| UP-06 | Phase 4 | Pending |
+| UP-07 | Phase 4 | Pending |
+| WAT-01 | Phase 5 | Pending |
+| WAT-02 | Phase 5 | Pending |
+| WAT-03 | Phase 5 | Pending |
+| WAT-04 | Phase 5 | Pending |
+| WAT-05 | Phase 5 | Pending |
+| WAT-06 | Phase 5 | Pending |
+| WAT-07 | Phase 5 | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| AUTH-07 | Phase 1 | Pending |
+| AUTH-08 | Phase 1 | Pending |
+| I18N-01 | Phase 6 | Pending |
+| I18N-02 | Phase 6 | Pending |
+| I18N-03 | Phase 6 | Pending |
+| I18N-04 | Phase 6 | Pending |
+| I18N-05 | Phase 6 | Pending |
+| THEME-01 | Phase 6 | Pending |
+| THEME-02 | Phase 6 | Pending |
+| THEME-03 | Phase 6 | Pending |
+| THEME-04 | Phase 6 | Pending |
+| DOCS-01 | Phase 7 | Pending |
+| DOCS-02 | Phase 7 | Pending |
+| DOCS-03 | Phase 7 | Pending |
+| DOCS-04 | Phase 7 | Pending |
+| DOCS-05 | Phase 7 | Pending |
+| DOCS-06 | Phase 7 | Pending |
+| BRAND-01 | Phase 1 | Pending |
+| BRAND-02 | Phase 1 | Pending |
+| BRAND-03 | Phase 1 | Pending |
+| DEP-01 | Phase 8 | Pending |
+| DEP-02 | Phase 8 | Pending |
+| DEP-03 | Phase 8 | Pending |
+| DEP-04 | Phase 8 | Pending |
+| DEP-05 | Phase 8 | Pending |
+| DEP-06 | Phase 8 | Pending |
+| DEP-07 | Phase 8 | Pending |
+| DEP-08 | Phase 8 | Pending |
+| DEP-09 | Phase 8 | Pending |
+| OBS-01 | Phase 2 | Pending |
+| OBS-02 | Phase 1 | Pending |
+| OBS-03 | Phase 8 | Pending |
+| SEC-01 | Phase 8 | Pending |
+| SEC-02 | Phase 8 | Pending |
+| SEC-03 | Phase 1 | Pending |
+| SEC-04 | Phase 1 | Pending |
+| SEC-05 | Phase 8 | Pending |
+| TEST-01 | Phase 2 | Pending |
+| TEST-02 | Phase 3 | Pending |
+| TEST-03 | Phase 4 | Pending |
+| TEST-04 | Phase 6 | Pending |
 
-**Coverage:** 67 v1 requirements — mapping finalized in ROADMAP.md.
+**Coverage:** 67/67 v1 requirements mapped — 100% ✓
 
 ---
 *Requirements defined: 2026-04-08*
-*Last updated: 2026-04-08 after initial definition*
+*Last updated: 2026-04-08 after roadmap creation*
