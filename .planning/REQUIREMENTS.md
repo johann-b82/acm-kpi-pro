@@ -70,14 +70,14 @@
 
 ### Authentication & Authorization (AUTH)
 
-- [ ] **AUTH-01**: Users authenticate against on-prem Active Directory via LDAP (LDAPS supported).
-- [ ] **AUTH-02**: The auth layer is abstracted behind an `AuthProvider` interface so Entra ID / SAML can be added later without changing API code.
-- [ ] **AUTH-03**: Sessions persist across page reloads until explicitly logged out or expired.
-- [ ] **AUTH-04**: Two roles exist: `Viewer` (read-only dashboard + docs) and `Admin` (Viewer + upload + settings).
-- [ ] **AUTH-05**: Role assignment is based on an AD group membership (configurable group name per role).
-- [ ] **AUTH-06**: Unauthenticated users are redirected to a login page on any protected route.
-- [ ] **AUTH-07**: LDAP referrals are followed correctly (multi-domain AD support) and credentials are never logged.
-- [ ] **AUTH-08**: LDAP filter inputs are parameterized to prevent LDAP injection.
+- [x] **AUTH-01**: Users authenticate against on-prem Active Directory via LDAP (LDAPS supported).
+- [x] **AUTH-02**: The auth layer is abstracted behind an `AuthProvider` interface so Entra ID / SAML can be added later without changing API code.
+- [x] **AUTH-03**: Sessions persist across page reloads until explicitly logged out or expired.
+- [x] **AUTH-04**: Two roles exist: `Viewer` (read-only dashboard + docs) and `Admin` (Viewer + upload + settings).
+- [x] **AUTH-05**: Role assignment is based on an AD group membership (configurable group name per role).
+- [x] **AUTH-06**: Unauthenticated users are redirected to a login page on any protected route.
+- [x] **AUTH-07**: LDAP referrals are followed correctly (multi-domain AD support) and credentials are never logged.
+- [x] **AUTH-08**: LDAP filter inputs are parameterized to prevent LDAP injection.
 
 ### Internationalization (I18N)
 
@@ -131,7 +131,7 @@
 
 - [ ] **SEC-01**: All free-text description fields are sanitized before rendering (no XSS).
 - [ ] **SEC-02**: File uploads are size-limited and content-type checked.
-- [ ] **SEC-03**: LDAP credentials are bound via LDAPS when available; plaintext LDAP is an opt-in fallback with a clear admin warning.
+- [x] **SEC-03**: LDAP credentials are bound via LDAPS when available; plaintext LDAP is an opt-in fallback with a clear admin warning.
 - [ ] **SEC-04**: The reverse proxy sets HSTS, CSP, X-Frame-Options headers.
 - [ ] **SEC-05**: No telemetry or analytics beacons leave the host.
 
@@ -235,14 +235,14 @@
 | WAT-05 | Phase 5 | Pending |
 | WAT-06 | Phase 5 | Pending |
 | WAT-07 | Phase 5 | Pending |
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| AUTH-05 | Phase 1 | Pending |
-| AUTH-06 | Phase 1 | Pending |
-| AUTH-07 | Phase 1 | Pending |
-| AUTH-08 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete (01-05) |
+| AUTH-02 | Phase 1 | Complete (01-05) |
+| AUTH-03 | Phase 1 | Complete (01-05) |
+| AUTH-04 | Phase 1 | Complete (01-05) |
+| AUTH-05 | Phase 1 | Complete (01-05) |
+| AUTH-06 | Phase 1 | Complete (01-05) |
+| AUTH-07 | Phase 1 | Complete (01-05) |
+| AUTH-08 | Phase 1 | Complete (01-05) |
 | I18N-01 | Phase 6 | Pending |
 | I18N-02 | Phase 6 | Pending |
 | I18N-03 | Phase 6 | Pending |
@@ -275,7 +275,7 @@
 | OBS-03 | Phase 8 | Pending |
 | SEC-01 | Phase 8 | Pending |
 | SEC-02 | Phase 8 | Pending |
-| SEC-03 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Complete (01-05) |
 | SEC-04 | Phase 1 | Pending |
 | SEC-05 | Phase 8 | Pending |
 | TEST-01 | Phase 2 | Pending |
