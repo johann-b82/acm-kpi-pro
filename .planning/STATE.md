@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T17:28:15.609Z"
+last_updated: "2026-04-08T18:16:00.676Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -119,6 +119,8 @@ From `.planning/config.json`:
 - [Phase 03-kpi-layer-dashboard]: Phase 1 KpiSummary stub (types/kpi.ts) removed; replaced by kpi/types.ts with full Phase 3 DTO set
 - [Phase 03-03]: Fixed research SQL bug: importId → import_id; fixed jsonb_agg LIMIT syntax; scoped items_preview correlated subquery to same import_id
 - [Phase 03-kpi-layer-dashboard]: Option A (COUNT check inside tx) used for first-time MV refresh detection — matches RESEARCH.md prescription
+- [Phase 03-kpi-layer-dashboard]: Color computation lives exclusively in API layer (colors.ts) — frontend receives pre-computed color strings in JSON response
+- [Phase 03-kpi-layer-dashboard]: Thenable chain pattern used for Drizzle query builder mocks in Vitest (not recursive makeChain)
 
 ## Performance Metrics
 
@@ -139,3 +141,4 @@ From `.planning/config.json`:
 | Phase 03-kpi-layer-dashboard P03-02 | 495 | 2 tasks | 3 files |
 | Phase 03-kpi-layer-dashboard P03-03 | 35 | 1 tasks | 1 files |
 | Phase 03-kpi-layer-dashboard P03-04 | 25 | 1 tasks | 3 files |
+| Phase 03-kpi-layer-dashboard P03-05 | 45m | 2 tasks | 6 files |

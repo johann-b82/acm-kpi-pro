@@ -38,15 +38,15 @@
 
 - [x] **DASH-01**: Dashboard route shows a default "Executive view" with 4-6 KPI cards above the fold, no filters required.
 - [x] **DASH-02**: Each KPI card shows the value, a label, and a color-coded status (green / yellow / red) based on thresholds.
-- [ ] **DASH-03**: Dashboard shows a prominent "Last updated" timestamp and warns with a visible banner if data is older than 30 minutes (yellow) or 2 hours (red).
-- [ ] **DASH-04**: Dashboard polls for new data every 30 seconds and refreshes without a full page reload.
-- [ ] **DASH-05**: Users can slice and filter by warehouse (`Lagername`), product group (`WGR`/`ProdGrp`), ABC class, and article type (`Typ`).
-- [ ] **DASH-06**: Dashboard shows a slow-mover / dead-stock chart (aging buckets).
-- [ ] **DASH-07**: Dashboard shows a stockout / low-stock list with drill-down to row detail.
-- [ ] **DASH-08**: First contentful paint is under 2 seconds on the target network from a cold cache.
+- [x] **DASH-03**: Dashboard shows a prominent "Last updated" timestamp and warns with a visible banner if data is older than 30 minutes (yellow) or 2 hours (red).
+- [x] **DASH-04**: Dashboard polls for new data every 30 seconds and refreshes without a full page reload.
+- [x] **DASH-05**: Users can slice and filter by warehouse (`Lagername`), product group (`WGR`/`ProdGrp`), ABC class, and article type (`Typ`).
+- [x] **DASH-06**: Dashboard shows a slow-mover / dead-stock chart (aging buckets).
+- [x] **DASH-07**: Dashboard shows a stockout / low-stock list with drill-down to row detail.
+- [x] **DASH-08**: First contentful paint is under 2 seconds on the target network from a cold cache.
 - [ ] **DASH-09**: All numbers displayed on the dashboard use German formatting (`1.234.567,89 €`) when the UI language is German, and English formatting otherwise.
 - [ ] **DASH-10**: Dates are displayed as `DD.MM.YYYY` in German and `YYYY-MM-DD` (or locale default) in English.
-- [ ] **DASH-11**: A refresh button lets users force a re-poll without waiting for the polling interval.
+- [x] **DASH-11**: A refresh button lets users force a re-poll without waiting for the polling interval.
 
 ### Upload Page (UP)
 
@@ -212,15 +212,15 @@
 | KPI-10 | Phase 2 | Pending |
 | DASH-01 | Phase 3 | Complete |
 | DASH-02 | Phase 3 | Complete |
-| DASH-03 | Phase 3 | Pending |
-| DASH-04 | Phase 3 | Pending |
-| DASH-05 | Phase 3 | Pending |
-| DASH-06 | Phase 3 | Pending |
-| DASH-07 | Phase 3 | Pending |
-| DASH-08 | Phase 3 | Pending |
+| DASH-03 | Phase 3 | Complete |
+| DASH-04 | Phase 3 | Complete |
+| DASH-05 | Phase 3 | Complete |
+| DASH-06 | Phase 3 | Complete |
+| DASH-07 | Phase 3 | Complete |
+| DASH-08 | Phase 3 | Complete |
 | DASH-09 | Phase 6 | Pending |
 | DASH-10 | Phase 6 | Pending |
-| DASH-11 | Phase 3 | Pending |
+| DASH-11 | Phase 3 | Complete |
 | UP-01 | Phase 4 | Pending |
 | UP-02 | Phase 4 | Pending |
 | UP-03 | Phase 4 | Pending |
