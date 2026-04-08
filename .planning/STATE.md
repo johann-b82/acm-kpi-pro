@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T17:21:10.619Z"
+last_updated: "2026-04-08T17:28:15.609Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -118,6 +118,7 @@ From `.planning/config.json`:
 - [Phase 02-csv-ingestion-core]: FeedRegistry as Map singleton in registry.ts — Phase 3+ adds feeds via feedRegistry.set() without modifying existing ingest code (KPI-10)
 - [Phase 03-kpi-layer-dashboard]: Phase 1 KpiSummary stub (types/kpi.ts) removed; replaced by kpi/types.ts with full Phase 3 DTO set
 - [Phase 03-03]: Fixed research SQL bug: importId → import_id; fixed jsonb_agg LIMIT syntax; scoped items_preview correlated subquery to same import_id
+- [Phase 03-kpi-layer-dashboard]: Option A (COUNT check inside tx) used for first-time MV refresh detection — matches RESEARCH.md prescription
 
 ## Performance Metrics
 
@@ -137,3 +138,4 @@ From `.planning/config.json`:
 | Phase 02-csv-ingestion-core P02-06 | 11 | 2 tasks | 6 files |
 | Phase 03-kpi-layer-dashboard P03-02 | 495 | 2 tasks | 3 files |
 | Phase 03-kpi-layer-dashboard P03-03 | 35 | 1 tasks | 1 files |
+| Phase 03-kpi-layer-dashboard P03-04 | 25 | 1 tasks | 3 files |
