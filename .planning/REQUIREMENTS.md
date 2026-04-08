@@ -18,7 +18,7 @@
 - [x] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
 - [x] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
 - [x] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
-- [ ] **IN-12**: The ingestion pipeline completes a typical-size file (10k rows) in under 60 seconds end-to-end on the target host.
+- [x] **IN-12**: The ingestion pipeline completes a typical-size file (10k rows) in under 60 seconds end-to-end on the target host.
 - [x] **IN-13**: Negative stock values are preserved as legitimate data, not rejected or zeroed.
 
 ### Data Model & KPI Layer (KPI)
@@ -123,7 +123,7 @@
 
 ### Observability (OBS)
 
-- [ ] **OBS-01**: All services log structured JSON to stdout (Docker captures + rotates).
+- [x] **OBS-01**: All services log structured JSON to stdout (Docker captures + rotates).
 - [ ] **OBS-02**: A `/healthz` endpoint on the API reports service health plus last-ingest timestamp and status.
 - [ ] **OBS-03**: Import errors are visible to admins via the dashboard (banner / error log page) — not only in container logs.
 
@@ -198,7 +198,7 @@
 | IN-09 | Phase 2 | Complete |
 | IN-10 | Phase 2 | Complete |
 | IN-11 | Phase 2 | Complete |
-| IN-12 | Phase 2 | Pending |
+| IN-12 | Phase 2 | Complete |
 | IN-13 | Phase 2 | Complete |
 | KPI-01 | Phase 2 | Complete |
 | KPI-02 | Phase 3 | Pending |
@@ -270,7 +270,7 @@
 | DEP-07 | Phase 8 | Pending |
 | DEP-08 | Phase 8 | Pending |
 | DEP-09 | Phase 8 | Pending |
-| OBS-01 | Phase 2 | Pending |
+| OBS-01 | Phase 2 | Complete |
 | OBS-02 | Phase 1 | Pending |
 | OBS-03 | Phase 8 | Pending |
 | SEC-01 | Phase 8 | Pending |

@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T15:16:05.700Z"
+last_updated: "2026-04-08T15:31:11.358Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -114,6 +114,8 @@ From `.planning/config.json`:
 - [Phase 02-05]: Batch size fixed at 500 rows per INSERT (IN-12); tested with 1200-row assertion
 - [Phase 02-05]: Date fields serialised to YYYY-MM-DD strings for Drizzle pg-core date columns
 - [Phase 02-05]: Mid-swap atomicity test uses execute() failure — simulates TRUNCATE stock_rows failure with 3 rows
+- [Phase 02-csv-ingestion-core]: ingestLagBesFile opts.db injection pattern — avoids DATABASE_URL throw at module load; enables Vitest test isolation without mock hoisting issues in forks pool
+- [Phase 02-csv-ingestion-core]: FeedRegistry as Map singleton in registry.ts — Phase 3+ adds feeds via feedRegistry.set() without modifying existing ingest code (KPI-10)
 
 ## Performance Metrics
 
@@ -130,3 +132,4 @@ From `.planning/config.json`:
 | 02 | 03 | ~10 min | 2/2 | 2 |
 | Phase 02 P02-04 | 50 | 2 tasks | 10 files |
 | Phase 02-csv-ingestion-core P02-05 | 5 | 2 tasks | 2 files |
+| Phase 02-csv-ingestion-core P02-06 | 11 | 2 tasks | 6 files |
