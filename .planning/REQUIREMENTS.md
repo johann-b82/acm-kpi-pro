@@ -16,14 +16,14 @@
 - [ ] **IN-07**: The parser accepts both `.csv` and `.txt` file extensions.
 - [ ] **IN-08**: The folder watcher detects new files only after they are stable (size + mtime unchanged for ≥1 second) to avoid ingesting partially-written files.
 - [ ] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
-- [ ] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
+- [x] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
 - [ ] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
 - [ ] **IN-12**: The ingestion pipeline completes a typical-size file (10k rows) in under 60 seconds end-to-end on the target host.
 - [ ] **IN-13**: Negative stock values are preserved as legitimate data, not rejected or zeroed.
 
 ### Data Model & KPI Layer (KPI)
 
-- [ ] **KPI-01**: PostgreSQL schema stores parsed stock rows with strong types (numeric for quantities and values, parsed dates, enums for `Typ`).
+- [x] **KPI-01**: PostgreSQL schema stores parsed stock rows with strong types (numeric for quantities and values, parsed dates, enums for `Typ`).
 - [ ] **KPI-02**: A materialized view pre-computes dashboard KPIs and is refreshed in the same transaction as an import.
 - [ ] **KPI-03**: Total inventory value (€) — sum of `Wert mit Abw.` — is computed and queryable.
 - [ ] **KPI-04**: Days-on-hand / coverage is computed from `Reichw.Mon.` and `Durch.Verbr`.
@@ -196,11 +196,11 @@
 | IN-07 | Phase 2 | Pending |
 | IN-08 | Phase 5 | Pending |
 | IN-09 | Phase 2 | Pending |
-| IN-10 | Phase 2 | Pending |
+| IN-10 | Phase 2 | Complete |
 | IN-11 | Phase 2 | Pending |
 | IN-12 | Phase 2 | Pending |
 | IN-13 | Phase 2 | Pending |
-| KPI-01 | Phase 2 | Pending |
+| KPI-01 | Phase 2 | Complete |
 | KPI-02 | Phase 3 | Pending |
 | KPI-03 | Phase 3 | Pending |
 | KPI-04 | Phase 3 | Pending |

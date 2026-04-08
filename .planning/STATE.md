@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-04-08T14:35:59.539Z"
+progress:
+  total_phases: 8
+  completed_phases: 1
+  total_plans: 2
+  completed_plans: 1
+---
+
 # Project State
 
 ## Project Reference
@@ -89,6 +102,10 @@ From `.planning/config.json`:
 | 01-07 | HSTS preload omitted — requires hstspreload.org registration; not for internal on-prem app |
 | 01-07 | Docker network internal:false — Caddy tls internal needs external CA resolution; set true in air-gapped prod |
 
+- [Phase 02]: article_type enum created as pgEnum (not text) — DB-level type safety on Typ column
+- [Phase 02]: stock_rows_staging has no FK/indexes — bulk insert performance during atomic swap
+- [Phase 02]: drizzle-kit generate bypassed for column renames (requires TTY in v0.31.x); migration SQL written manually and verified
+
 ## Performance Metrics
 
 | Phase | Plan | Duration | Tasks | Files |
@@ -100,3 +117,4 @@ From `.planning/config.json`:
 
 ---
 *Last updated: 2026-04-08 after 01-07 Caddy + docker-compose + TLS + security headers*
+| Phase 02-csv-ingestion-core P02-02 | 45 | 2 tasks | 6 files |
