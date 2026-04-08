@@ -311,6 +311,28 @@ export async function insertStockRowsAtomic(
         raw_row
       FROM stock_rows_staging
     `);
+
+    // Step 5: Refresh the KPI materialized view (Phase 3 — KPI-02)
+    // CONCURRENTLY requires the MV to have at least one existing row + a unique index.
+    // On first import the MV is empty — use non-concurrent refresh.
+    // On subsequent imports use CONCURRENTLY so dashboard reads are never blocked.
+    const mvCountResult = await tx.execute(
+      sql`SELECT COUNT(*)::int AS count FROM kpi_dashboard_data`,
+    );
+    const mvRowCount = Number(
+      (mvCountResult.rows[0] as { count: number } | undefined)?.count ?? 0,
+    );
+
+    if (mvRowCount === 0) {
+      // First-time initialisation: MV is empty, CONCURRENTLY is not available yet.
+      await tx.execute(sql`REFRESH MATERIALIZED VIEW kpi_dashboard_data`);
+    } else {
+      // Subsequent refresh: CONCURRENTLY so dashboard reads are never blocked
+      // (Pitfall #6 mitigation — dashboard freshness is unambiguous).
+      await tx.execute(
+        sql`REFRESH MATERIALIZED VIEW CONCURRENTLY kpi_dashboard_data`,
+      );
+    }
   });
 
   return { inserted: rows.length };

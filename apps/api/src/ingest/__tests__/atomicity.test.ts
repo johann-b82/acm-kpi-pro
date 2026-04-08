@@ -127,7 +127,8 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
             return Promise.resolve([]);
           }),
         }),
-        execute: vi.fn().mockResolvedValue(undefined),
+        // Return { rows: [] } so the MV COUNT check finds no rows (non-concurrent path)
+        execute: vi.fn().mockResolvedValue({ rows: [] }),
       };
       return cb(fakeTx);
     });
@@ -151,7 +152,8 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
         insert: vi
           .fn()
           .mockReturnValue({ values: vi.fn().mockResolvedValue([]) }),
-        execute: vi.fn().mockResolvedValue(undefined),
+        // Return { rows: [] } so the MV COUNT check finds no rows (non-concurrent path)
+        execute: vi.fn().mockResolvedValue({ rows: [] }),
       };
       return cb(fakeTx);
     });
@@ -166,7 +168,8 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
         insert: vi
           .fn()
           .mockReturnValue({ values: vi.fn().mockResolvedValue([]) }),
-        execute: vi.fn().mockResolvedValue(undefined),
+        // Return { rows: [] } so the MV COUNT check finds no rows (non-concurrent path)
+        execute: vi.fn().mockResolvedValue({ rows: [] }),
       };
       return cb(fakeTx);
     });
@@ -187,7 +190,8 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
           // Capture the SQL string representation
           const sqlStr = String(sqlObj?.sql ?? sqlObj ?? "");
           executeCalls.push(sqlStr);
-          return Promise.resolve(undefined);
+          // Return { rows: [] } so the MV COUNT check defaults to 0 (non-concurrent path)
+          return Promise.resolve({ rows: [] });
         }),
       };
       return cb(fakeTx);
@@ -197,6 +201,150 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
 
     // Should have at least 3 execute calls: TRUNCATE staging, TRUNCATE live, INSERT…SELECT
     expect(executeCalls.length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+/**
+ * Extracts the raw SQL text from a Drizzle `sql` template object.
+ * Drizzle stores text chunks in `queryChunks[].value[]`. This helper
+ * is used in MV-refresh tests so we can assert on the actual SQL strings.
+ */
+function extractSql(sqlObj: unknown): string {
+  if (typeof sqlObj === "string") return sqlObj;
+  const obj = sqlObj as Record<string, unknown>;
+  if (Array.isArray(obj?.queryChunks)) {
+    return (obj.queryChunks as Array<{ value?: unknown }>)
+      .map((c) => {
+        if (!c.value) return "";
+        return Array.isArray(c.value) ? c.value.join("") : String(c.value);
+      })
+      .join("");
+  }
+  return String(sqlObj ?? "");
+}
+
+describe("MV refresh hook", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  test("uses non-concurrent refresh when MV has 0 rows (first import)", async () => {
+    const executeCalls: string[] = [];
+    vi.mocked(db).transaction = vi.fn().mockImplementation(async (cb: any) => {
+      const fakeTx = {
+        insert: vi.fn().mockReturnValue({
+          values: vi.fn().mockResolvedValue([]),
+        }),
+        execute: vi.fn().mockImplementation((sqlObj: any) => {
+          const sqlStr = extractSql(sqlObj);
+          executeCalls.push(sqlStr);
+          // COUNT query returns 0 rows → first import (non-concurrent path)
+          if (sqlStr.toUpperCase().includes("COUNT")) {
+            return Promise.resolve({ rows: [{ count: 0 }] });
+          }
+          return Promise.resolve({ rows: [] });
+        }),
+      };
+      return cb(fakeTx);
+    });
+
+    await insertStockRowsAtomic(db as any, 1, []);
+
+    const refreshCalls = executeCalls.filter((s) =>
+      s.toUpperCase().includes("REFRESH MATERIALIZED VIEW"),
+    );
+    expect(refreshCalls).toHaveLength(1);
+    expect(refreshCalls[0]!.toUpperCase()).not.toContain("CONCURRENTLY");
+    expect(refreshCalls[0]!.toLowerCase()).toContain("kpi_dashboard_data");
+  });
+
+  test("uses concurrent refresh when MV has rows (subsequent import)", async () => {
+    const executeCalls: string[] = [];
+    vi.mocked(db).transaction = vi.fn().mockImplementation(async (cb: any) => {
+      const fakeTx = {
+        insert: vi.fn().mockReturnValue({
+          values: vi.fn().mockResolvedValue([]),
+        }),
+        execute: vi.fn().mockImplementation((sqlObj: any) => {
+          const sqlStr = extractSql(sqlObj);
+          executeCalls.push(sqlStr);
+          // COUNT query returns 1 row → subsequent import (concurrent path)
+          if (sqlStr.toUpperCase().includes("COUNT")) {
+            return Promise.resolve({ rows: [{ count: 1 }] });
+          }
+          return Promise.resolve({ rows: [] });
+        }),
+      };
+      return cb(fakeTx);
+    });
+
+    await insertStockRowsAtomic(db as any, 1, []);
+
+    const refreshCalls = executeCalls.filter((s) =>
+      s.toUpperCase().includes("REFRESH MATERIALIZED VIEW"),
+    );
+    expect(refreshCalls).toHaveLength(1);
+    expect(refreshCalls[0]!.toUpperCase()).toContain("CONCURRENTLY");
+    expect(refreshCalls[0]!.toLowerCase()).toContain("kpi_dashboard_data");
+  });
+
+  test("propagates error if MV refresh throws (rolls back transaction)", async () => {
+    vi.mocked(db).transaction = vi.fn().mockImplementation(async (cb: any) => {
+      const fakeTx = {
+        insert: vi.fn().mockReturnValue({
+          values: vi.fn().mockResolvedValue([]),
+        }),
+        execute: vi.fn().mockImplementation((sqlObj: any) => {
+          const sqlStr = extractSql(sqlObj);
+          // COUNT query returns 0 → non-concurrent path
+          if (sqlStr.toUpperCase().includes("COUNT")) {
+            return Promise.resolve({ rows: [{ count: 0 }] });
+          }
+          // REFRESH call → throw to simulate PG error
+          if (sqlStr.toUpperCase().includes("REFRESH MATERIALIZED VIEW")) {
+            return Promise.reject(
+              new Error("materialized view refresh failed"),
+            );
+          }
+          return Promise.resolve({ rows: [] });
+        }),
+      };
+      return cb(fakeTx);
+    });
+
+    await expect(
+      insertStockRowsAtomic(db as any, 1, []),
+    ).rejects.toThrow("materialized view refresh failed");
+  });
+
+  test("REFRESH is called after INSERT...SELECT (call order check)", async () => {
+    const callOrder: string[] = [];
+    vi.mocked(db).transaction = vi.fn().mockImplementation(async (cb: any) => {
+      const fakeTx = {
+        insert: vi.fn().mockReturnValue({
+          values: vi.fn().mockResolvedValue([]),
+        }),
+        execute: vi.fn().mockImplementation((sqlObj: any) => {
+          const sqlStr = extractSql(sqlObj);
+          if (sqlStr.toUpperCase().includes("INSERT INTO STOCK_ROWS")) {
+            callOrder.push("INSERT_PROMOTE");
+          } else if (sqlStr.toUpperCase().includes("REFRESH MATERIALIZED VIEW")) {
+            callOrder.push("REFRESH_MV");
+          } else if (sqlStr.toUpperCase().includes("COUNT")) {
+            return Promise.resolve({ rows: [{ count: 0 }] });
+          }
+          return Promise.resolve({ rows: [] });
+        }),
+      };
+      return cb(fakeTx);
+    });
+
+    await insertStockRowsAtomic(db as any, 1, [makeRow("A1")]);
+
+    const insertIdx = callOrder.indexOf("INSERT_PROMOTE");
+    const refreshIdx = callOrder.indexOf("REFRESH_MV");
+    expect(insertIdx).toBeGreaterThanOrEqual(0);
+    expect(refreshIdx).toBeGreaterThan(insertIdx);
   });
 });
 
