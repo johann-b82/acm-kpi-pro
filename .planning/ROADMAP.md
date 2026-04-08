@@ -151,7 +151,7 @@
 - [ ] Filter dropdown scaffolding present but non-functional (deferred to v1.x)
 - [ ] Unit tests pass for all 7 KPI calculations
 
-**Plans:** 6 plans
+**Plans:** 0/1 plans executed
 
 Plans:
 - [ ] 03-PLAN.md — Phase 3 index + wave structure + dependency graph

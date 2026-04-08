@@ -138,7 +138,7 @@
 ### Testing (TEST)
 
 - [x] **TEST-01**: The CSV parser has unit tests covering the decimal-comma quirk, encoding, dates, and negative stock, with `samples/LagBes-sample.csv` as the golden fixture.
-- [ ] **TEST-02**: Core KPI calculation functions have unit tests.
+- [x] **TEST-02**: Core KPI calculation functions have unit tests.
 - [ ] **TEST-03**: At least one end-to-end Playwright test covers: login → upload file → dashboard shows updated KPI.
 - [ ] **TEST-04**: A CI check fails the build when `de.json` and `en.json` diverge.
 
@@ -279,7 +279,7 @@
 | SEC-04 | Phase 1 | Pending |
 | SEC-05 | Phase 8 | Pending |
 | TEST-01 | Phase 2 | Complete |
-| TEST-02 | Phase 3 | Pending |
+| TEST-02 | Phase 3 | Complete |
 | TEST-03 | Phase 4 | Pending |
 | TEST-04 | Phase 6 | Pending |
 
