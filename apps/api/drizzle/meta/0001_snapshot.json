@@ -1,0 +1,1041 @@
+{
+  "id": "b7d90970-9370-4e88-8e6e-e2899e26c883",
+  "prevId": "1eda25ec-87fa-4755-8346-43ec4b5d12e8",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.imports": {
+      "name": "imports",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "filename": {
+          "name": "filename",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "row_count": {
+          "name": "row_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "operator": {
+          "name": "operator",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'cli'"
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_imports_status": {
+          "name": "idx_imports_status",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_imports_created_at": {
+          "name": "idx_imports_created_at",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sessions": {
+      "name": "sessions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.stock_rows": {
+      "name": "stock_rows",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "import_id": {
+          "name": "import_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "artikelnr": {
+          "name": "artikelnr",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ": {
+          "name": "typ",
+          "type": "article_type",
+          "primaryKey": false,
+          "notNull": true,
+          "typeSchema": "public"
+        },
+        "bezeichnung_1": {
+          "name": "bezeichnung_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_2": {
+          "name": "bezeichnung_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_3": {
+          "name": "bezeichnung_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_4": {
+          "name": "bezeichnung_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_5": {
+          "name": "bezeichnung_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_6": {
+          "name": "bezeichnung_6",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wgr": {
+          "name": "wgr",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prodgrp": {
+          "name": "prodgrp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wareneingangskonto": {
+          "name": "wareneingangskonto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestandskonto": {
+          "name": "bestandskonto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagername": {
+          "name": "lagername",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bestand_lagereinheit": {
+          "name": "bestand_lagereinheit",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lag_einh": {
+          "name": "lag_einh",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestand_basiseinheit": {
+          "name": "bestand_basiseinheit",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "einh": {
+          "name": "einh",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preis": {
+          "name": "preis",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pro_menge": {
+          "name": "pro_menge",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wert": {
+          "name": "wert",
+          "type": "numeric(18, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "abwert_prozent": {
+          "name": "abwert_prozent",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wert_mit_abw": {
+          "name": "wert_mit_abw",
+          "type": "numeric(18, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "durch_verbr": {
+          "name": "durch_verbr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reichw_mon": {
+          "name": "reichw_mon",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "letzt_zugang": {
+          "name": "letzt_zugang",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "letzt_zugang_fa": {
+          "name": "letzt_zugang_fa",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stammlager": {
+          "name": "stammlager",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stammstellplatz": {
+          "name": "stammstellplatz",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "umsatz_me_j": {
+          "name": "umsatz_me_j",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "umsatz_me_vj": {
+          "name": "umsatz_me_vj",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lieferant": {
+          "name": "lieferant",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerb_d": {
+          "name": "lagerb_d",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auftrag_m": {
+          "name": "auftrag_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reserv_m": {
+          "name": "reserv_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestell_m": {
+          "name": "bestell_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fa_menge": {
+          "name": "fa_menge",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bedarf_m": {
+          "name": "bedarf_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "o_verbrauch_m": {
+          "name": "o_verbrauch_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "l_ek_am": {
+          "name": "l_ek_am",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "produktgruppe": {
+          "name": "produktgruppe",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stm_uni_a01": {
+          "name": "stm_uni_a01",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerzugang_dat": {
+          "name": "lagerzugang_dat",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_dat": {
+          "name": "lagerabgang_dat",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_letztes_jahr": {
+          "name": "lagerabgang_letztes_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_letztes_12_jahr": {
+          "name": "lagerabgang_letztes_12_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerzugang_letztes_12_jahr": {
+          "name": "lagerzugang_letztes_12_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "geloescht": {
+          "name": "geloescht",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'N'"
+        },
+        "erf_datum": {
+          "name": "erf_datum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eingrenzung_von": {
+          "name": "eingrenzung_von",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eingrenzung_bis": {
+          "name": "eingrenzung_bis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inventurgruppe": {
+          "name": "inventurgruppe",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "abc_kennz_vk": {
+          "name": "abc_kennz_vk",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_row": {
+          "name": "raw_row",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_stock_rows_import": {
+          "name": "idx_stock_rows_import",
+          "columns": [
+            {
+              "expression": "import_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_stock_rows_artikelnr": {
+          "name": "idx_stock_rows_artikelnr",
+          "columns": [
+            {
+              "expression": "artikelnr",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_stock_rows_lagername": {
+          "name": "idx_stock_rows_lagername",
+          "columns": [
+            {
+              "expression": "lagername",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_stock_rows_typ": {
+          "name": "idx_stock_rows_typ",
+          "columns": [
+            {
+              "expression": "typ",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_stock_rows_abc": {
+          "name": "idx_stock_rows_abc",
+          "columns": [
+            {
+              "expression": "abc_kennz_vk",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "stock_rows_import_id_imports_id_fk": {
+          "name": "stock_rows_import_id_imports_id_fk",
+          "tableFrom": "stock_rows",
+          "tableTo": "imports",
+          "columnsFrom": ["import_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.stock_rows_staging": {
+      "name": "stock_rows_staging",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "import_id": {
+          "name": "import_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "artikelnr": {
+          "name": "artikelnr",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ": {
+          "name": "typ",
+          "type": "article_type",
+          "primaryKey": false,
+          "notNull": true,
+          "typeSchema": "public"
+        },
+        "bezeichnung_1": {
+          "name": "bezeichnung_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_2": {
+          "name": "bezeichnung_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_3": {
+          "name": "bezeichnung_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_4": {
+          "name": "bezeichnung_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_5": {
+          "name": "bezeichnung_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bezeichnung_6": {
+          "name": "bezeichnung_6",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wgr": {
+          "name": "wgr",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prodgrp": {
+          "name": "prodgrp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wareneingangskonto": {
+          "name": "wareneingangskonto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestandskonto": {
+          "name": "bestandskonto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagername": {
+          "name": "lagername",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bestand_lagereinheit": {
+          "name": "bestand_lagereinheit",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lag_einh": {
+          "name": "lag_einh",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestand_basiseinheit": {
+          "name": "bestand_basiseinheit",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "einh": {
+          "name": "einh",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preis": {
+          "name": "preis",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pro_menge": {
+          "name": "pro_menge",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wert": {
+          "name": "wert",
+          "type": "numeric(18, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "abwert_prozent": {
+          "name": "abwert_prozent",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wert_mit_abw": {
+          "name": "wert_mit_abw",
+          "type": "numeric(18, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "durch_verbr": {
+          "name": "durch_verbr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reichw_mon": {
+          "name": "reichw_mon",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "letzt_zugang": {
+          "name": "letzt_zugang",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "letzt_zugang_fa": {
+          "name": "letzt_zugang_fa",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stammlager": {
+          "name": "stammlager",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stammstellplatz": {
+          "name": "stammstellplatz",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "umsatz_me_j": {
+          "name": "umsatz_me_j",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "umsatz_me_vj": {
+          "name": "umsatz_me_vj",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lieferant": {
+          "name": "lieferant",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerb_d": {
+          "name": "lagerb_d",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auftrag_m": {
+          "name": "auftrag_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reserv_m": {
+          "name": "reserv_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bestell_m": {
+          "name": "bestell_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fa_menge": {
+          "name": "fa_menge",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bedarf_m": {
+          "name": "bedarf_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "o_verbrauch_m": {
+          "name": "o_verbrauch_m",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "l_ek_am": {
+          "name": "l_ek_am",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "produktgruppe": {
+          "name": "produktgruppe",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stm_uni_a01": {
+          "name": "stm_uni_a01",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerzugang_dat": {
+          "name": "lagerzugang_dat",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_dat": {
+          "name": "lagerabgang_dat",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_letztes_jahr": {
+          "name": "lagerabgang_letztes_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerabgang_letztes_12_jahr": {
+          "name": "lagerabgang_letztes_12_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lagerzugang_letztes_12_jahr": {
+          "name": "lagerzugang_letztes_12_jahr",
+          "type": "numeric(18, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "geloescht": {
+          "name": "geloescht",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'N'"
+        },
+        "erf_datum": {
+          "name": "erf_datum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eingrenzung_von": {
+          "name": "eingrenzung_von",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eingrenzung_bis": {
+          "name": "eingrenzung_bis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inventurgruppe": {
+          "name": "inventurgruppe",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "abc_kennz_vk": {
+          "name": "abc_kennz_vk",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_row": {
+          "name": "raw_row",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ldap_dn": {
+          "name": "ldap_dn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Viewer'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_ldap_dn_unique": {
+          "name": "users_ldap_dn_unique",
+          "nullsNotDistinct": false,
+          "columns": ["ldap_dn"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.article_type": {
+      "name": "article_type",
+      "schema": "public",
+      "values": ["ART", "MAT", "HLB", "WKZ"]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
