@@ -105,6 +105,10 @@ From `.planning/config.json`:
 - [Phase 02]: article_type enum created as pgEnum (not text) — DB-level type safety on Typ column
 - [Phase 02]: stock_rows_staging has no FK/indexes — bulk insert performance during atomic swap
 - [Phase 02]: drizzle-kit generate bypassed for column renames (requires TTY in v0.31.x); migration SQL written manually and verified
+- [02-03]: ParsedRow uses index signature ([key: string]: unknown) — feed-agnostic, Zod narrows in apps/api
+- [02-03]: FeedParser.db typed as unknown — keeps @acm-kpi/core dep-free (no drizzle import)
+- [02-03]: FeedRegistry = Map<string, FeedParser> type alias; callers instantiate with new Map()
+- [02-03]: tsc --build --force needed after manual dist cleanup in TypeScript 6.0.2 (incremental cache mismatch)
 
 ## Performance Metrics
 
@@ -116,5 +120,6 @@ From `.planning/config.json`:
 | 01 | 07 | ~25 min | 3/3 | 8 |
 
 ---
-*Last updated: 2026-04-08 after 01-07 Caddy + docker-compose + TLS + security headers*
+*Last updated: 2026-04-08 after 02-03 FeedParser interface and ingest types*
 | Phase 02-csv-ingestion-core P02-02 | 45 | 2 tasks | 6 files |
+| 02 | 03 | ~10 min | 2/2 | 2 |
