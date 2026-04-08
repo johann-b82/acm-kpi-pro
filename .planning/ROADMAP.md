@@ -151,6 +151,17 @@
 - [ ] Filter dropdown scaffolding present but non-functional (deferred to v1.x)
 - [ ] Unit tests pass for all 7 KPI calculations
 
+**Plans:** 6 plans
+
+Plans:
+- [ ] 03-PLAN.md — Phase 3 index + wave structure + dependency graph
+- [ ] 03-02-PLAN-shared-dto-types.md — Shared DTO types in packages/core/src/kpi/types.ts
+- [ ] 03-03-PLAN-mv-migration.md — Materialized view SQL migration (0002)
+- [ ] 03-04-PLAN-mv-refresh-hook.md — MV refresh hook in writer.ts (Phase 2 file, authorized)
+- [ ] 03-05-PLAN-api-endpoints.md — API: /summary, /articles, /meta endpoints + color computation
+- [ ] 03-06-PLAN-frontend-skeleton.md — React Query setup + hooks + DashboardPage skeleton
+- [ ] 03-07-PLAN-kpi-components.md — All KPI UI components (KpiGrid, SlowMoverChart, etc.)
+
 **Dependencies:** Phase 1, Phase 2
 
 **Can run in parallel with:** No — depends on Phase 2 ingestion
