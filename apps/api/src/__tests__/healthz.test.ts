@@ -9,6 +9,14 @@ vi.mock("../db/index.js", () => ({
   db: {},
 }));
 
+// Mock LDAPService to avoid real AD connections
+vi.mock("../services/ldap.service.js", () => ({
+  LDAPService: vi.fn().mockImplementation(() => ({
+    ping: vi.fn().mockResolvedValue(true),
+    authenticate: vi.fn(),
+  })),
+}));
+
 const testConfig: AppConfig = {
   NODE_ENV: "test",
   API_PORT: 3000,
@@ -54,8 +62,8 @@ describe("GET /api/v1/healthz", () => {
   });
 });
 
-describe("GET /api/v1/auth/me (stub)", () => {
-  it("returns 401 before auth middleware is registered", async () => {
+describe("GET /api/v1/auth/me", () => {
+  it("returns 401 when no session cookie is present", async () => {
     const server = await createServer(testConfig);
     const res = await server.inject({ method: "GET", url: "/api/v1/auth/me" });
     expect(res.statusCode).toBe(401);

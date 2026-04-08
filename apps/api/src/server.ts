@@ -3,6 +3,9 @@ import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
 import type { AppConfig } from "./config.js";
 import { checkDbConnection } from "./db/index.js";
+import { registerAdminRoutes } from "./routes/admin.js";
+import { registerAuthRoutes } from "./routes/auth.js";
+import { LDAPService } from "./services/ldap.service.js";
 
 /**
  * Create and configure the Fastify instance.
@@ -22,8 +25,15 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
     disableRequestLogging: false,
   });
 
-  // Register cookie plugin (required by iron-session — added in Plan 5)
+  // Register cookie plugin (required by iron-session)
   await server.register(fastifyCookie);
+
+  // ─── Services ─────────────────────────────────────────────────────────────
+
+  const ldapService = new LDAPService(config);
+
+  // Decorate server with ldapService so /healthz can call ping()
+  server.decorate("ldapService", ldapService);
 
   // ─── Routes ───────────────────────────────────────────────────────────────
 
@@ -31,10 +41,9 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
   server.get("/api/v1/healthz", async (_request, reply) => {
     const dbConnected = await checkDbConnection();
 
-    // LDAP reachability check is wired in Plan 5; stub returns false until then.
-    // This is honest: if the LDAP service is not yet initialized, we report false.
-    const ldapService = server.ldapService;
-    const ldapReachable = ldapService ? await ldapService.ping() : false;
+    // Call ldapService.ping() via the decorated server reference (always present after Plan 5)
+    const ldapSvc = server.ldapService;
+    const ldapReachable = ldapSvc ? await ldapSvc.ping() : false;
 
     const healthy = dbConnected;
 
@@ -48,11 +57,11 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
     });
   });
 
-  // Auth routes placeholder — implemented fully in Plan 5
-  server.get("/api/v1/auth/me", async (_request, reply) => {
-    // Returns 401 until iron-session middleware is added in Plan 5
-    return reply.code(401).send({ error: "Not authenticated" });
-  });
+  // Auth routes: /login, /logout, /me (AUTH-01, AUTH-03, AUTH-06)
+  await registerAuthRoutes(server, config, ldapService);
+
+  // Admin routes: /admin/ping and future admin endpoints (AUTH-04)
+  await registerAdminRoutes(server, config);
 
   // ─── Global error handler ─────────────────────────────────────────────────
   server.setErrorHandler((error: Error & { statusCode?: number }, _request, reply) => {
@@ -73,7 +82,7 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
   return server;
 }
 
-// Augment FastifyInstance to allow injecting the ldapService in Plan 5
+// Augment FastifyInstance to allow injecting the ldapService
 declare module "fastify" {
   interface FastifyInstance {
     ldapService?: { ping(): Promise<boolean> };
