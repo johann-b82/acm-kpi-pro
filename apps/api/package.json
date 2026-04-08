@@ -6,7 +6,9 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc --build",
     "test": "vitest run",
-    "db:migrate": "drizzle-kit push"
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@acm-kpi/core": "*",
