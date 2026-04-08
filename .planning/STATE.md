@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T18:16:00.676Z"
+last_updated: "2026-04-08T21:08:03.722Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -121,6 +121,8 @@ From `.planning/config.json`:
 - [Phase 03-kpi-layer-dashboard]: Option A (COUNT check inside tx) used for first-time MV refresh detection — matches RESEARCH.md prescription
 - [Phase 03-kpi-layer-dashboard]: Color computation lives exclusively in API layer (colors.ts) — frontend receives pre-computed color strings in JSON response
 - [Phase 03-kpi-layer-dashboard]: Thenable chain pattern used for Drizzle query builder mocks in Vitest (not recursive makeChain)
+- [Phase 03-kpi-layer-dashboard]: recharts upgraded from 2.12.0 to 3.8.1 — 2.12.0 does not support React 19 peer dep
+- [Phase 03-kpi-layer-dashboard]: DashboardPage uses data-testid slot divs — Plan 03-07 swaps in real components without changing prop types
 
 ## Performance Metrics
 
@@ -142,3 +144,4 @@ From `.planning/config.json`:
 | Phase 03-kpi-layer-dashboard P03-03 | 35 | 1 tasks | 1 files |
 | Phase 03-kpi-layer-dashboard P03-04 | 25 | 1 tasks | 3 files |
 | Phase 03-kpi-layer-dashboard P03-05 | 45m | 2 tasks | 6 files |
+| Phase 03-kpi-layer-dashboard P03-06 | 1200 | 2 tasks | 15 files |
