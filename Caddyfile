@@ -1,0 +1,87 @@
+# ACM KPI Pro — Caddy Reverse Proxy Configuration
+# Phase 1: tls internal (self-signed dev cert)
+#
+# PRODUCTION TLS UPGRADE:
+#   Replace `tls internal` with:
+#   tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
+#   Then mount certs into the caddy container:
+#     volumes:
+#       - /path/to/your/cert.pem:/etc/caddy/certs/cert.pem:ro
+#       - /path/to/your/key.pem:/etc/caddy/certs/key.pem:ro
+#
+# ASSUMPTION: IT will provide an internal CA cert.pem + key.pem for production.
+# ASSUMPTION: Hostname `:443` listens on all interfaces.
+#   In production, replace with the actual hostname, e.g.: acm-kpi.acm.local
+#   This enables proper SNI and certificate name matching.
+
+:443 {
+    # TLS — self-signed internal CA for development (SEC-03, DEP-05)
+    # To switch to a real cert, comment out the line below and uncomment the one after.
+    tls internal
+    # tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
+
+    # ── Security Headers (SEC-04) ────────────────────────────────────────────
+    header {
+        # HSTS: force HTTPS for 1 year, include subdomains
+        # NOTE: preload requires registration at hstspreload.org — confirm with IT before enabling.
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+        # Prevent clickjacking (SEC-04)
+        X-Frame-Options "DENY"
+
+        # MIME type sniffing prevention
+        X-Content-Type-Options "nosniff"
+
+        # Content Security Policy (SEC-04)
+        # default-src 'self'   — all resource types default to same-origin
+        # style-src 'unsafe-inline' — required by Tailwind CSS (inline style attributes)
+        #   TODO Phase 6: switch to hashed nonces once Tailwind moves to CSS classes only
+        # script-src 'self'    — no inline scripts; React bundle is same-origin
+        # img-src 'self' data: — data: URIs used by SVG inline images (logo, favicon)
+        # font-src 'self'      — all fonts are self-hosted (no CDN; air-gapped requirement)
+        # connect-src 'self'   — /api/* fetch calls; no external APIs at runtime
+        # frame-ancestors 'none' — redundant with X-Frame-Options but belt-and-suspenders
+        Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+
+        # Referrer policy — sends origin on cross-origin, full URL on same-origin
+        Referrer-Policy "strict-origin-when-cross-origin"
+
+        # Remove Caddy server version header (information leakage prevention)
+        -Server
+    }
+
+    # ── API proxy: /api/* → Fastify backend ─────────────────────────────────
+    handle /api/* {
+        reverse_proxy api:3000 {
+            header_up X-Forwarded-For {http.request.remote.host}
+            header_up X-Forwarded-Proto {http.request.scheme}
+            header_up X-Real-IP {http.request.remote.host}
+        }
+    }
+
+    # ── Frontend: everything else → static React bundle ─────────────────────
+    handle {
+        root * /srv/frontend
+        file_server
+        # SPA fallback: route all non-existent paths to index.html for React Router
+        try_files {path} /index.html
+    }
+
+    # ── Logging (OBS-01: structured JSON to stdout) ──────────────────────────
+    log {
+        output stdout
+        format json
+        level INFO
+    }
+}
+
+# HTTP → HTTPS redirect (permanent 301)
+:80 {
+    redir https://{host}{uri} permanent
+}
+
+# Internal health check port — no TLS needed; used by Docker healthcheck
+# NOT exposed to host (port 8080 is internal network only)
+:8080 {
+    respond /health "OK" 200
+}

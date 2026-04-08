@@ -1,0 +1,20 @@
+# ACM KPI Pro — Development overrides
+# Applied automatically by `docker compose up` in development.
+# Do NOT use in production.
+#
+# Production command (explicit, no overrides):
+#   docker compose -f docker-compose.yml up -d
+
+services:
+  api:
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: debug
+    # For hot reload during development, stop the container and use:
+    #   npm -w apps/api run dev
+    # instead of running inside Docker.
+
+  postgres:
+    # Expose Postgres port in dev for direct tooling access (drizzle-kit studio, psql, etc.)
+    ports:
+      - "5432:5432"

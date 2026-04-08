@@ -1,21 +1,178 @@
+# ACM KPI Pro — Docker Compose v2
+# Phase 1: caddy + api + frontend-build (init) + postgres + redis
+#
+# Usage:
+#   cp .env.example .env
+#   # Edit .env: set DB_PASSWORD, SESSION_SECRET, LDAP_* values
+#   docker compose up --build
+#
+# ASSUMPTION: Ubuntu 22.04 LTS target.
+#   SELinux :Z labels on bind mounts are included but are no-ops on non-SELinux hosts.
+#   If IT confirms SELinux enforcing mode (RHEL/CentOS), these labels are REQUIRED.
+#   Ask IT: "Is SELinux enforcing on the production host?"
+
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: acm_kpi_postgres
+
+  # ── Caddy reverse proxy + TLS ──────────────────────────────────────────────
+  # Only service that exposes ports to the host (80 + 443).
+  # Everything else communicates on the internal `acm` bridge network.
+  caddy:
+    image: caddy:2.8-alpine
+    container_name: acm-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro,Z
+      # Frontend static files — populated by the `frontend-build` init service below
+      - frontend_dist:/srv/frontend:ro,Z
+      # Caddy TLS data persistence (auto-managed certs, ACME state)
+      - caddy_data:/data:Z
+      # Caddy runtime config persistence
+      - caddy_config:/config:Z
+    networks:
+      - acm
+    depends_on:
+      api:
+        condition: service_healthy
+      frontend-build:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ── Frontend build (init container) ───────────────────────────────────────
+  # Builds the React app once and copies the dist/ output to the shared
+  # `frontend_dist` named volume that Caddy mounts read-only.
+  #
+  # In production CI/CD: replace this service with a pre-built image that
+  # already contains the dist/ output, and use `command: true` (no-op).
+  #
+  # NOTE: Uses the `builder` target of apps/frontend/Dockerfile, which
+  # contains Node.js + built output at /app/apps/frontend/dist/.
+  frontend-build:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      target: builder
+    container_name: acm-frontend-build
+    # Copy built output into the shared volume, then exit 0 (init container pattern)
+    command: sh -c "cp -r /app/apps/frontend/dist/. /srv/frontend/ && echo '[frontend-build] Static files copied to /srv/frontend'"
+    volumes:
+      - frontend_dist:/srv/frontend:Z
+    networks:
+      - acm
+    # No restart — this is a one-shot init container
+    restart: "no"
+
+  # ── Fastify API ─────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: acm-api
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme_secure_password_here}
-      POSTGRES_DB: acm_kpi
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      NODE_ENV: ${NODE_ENV:-production}
+      API_PORT: "3000"
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@postgres:5432/acm_kpi
+      LDAP_URL: ${LDAP_URL}
+      LDAP_BIND_DN: ${LDAP_BIND_DN}
+      LDAP_BIND_PASSWORD: ${LDAP_BIND_PASSWORD}
+      LDAP_USER_SEARCH_BASE: ${LDAP_USER_SEARCH_BASE}
+      LDAP_GROUP_SEARCH_BASE: ${LDAP_GROUP_SEARCH_BASE}
+      LDAP_VIEWER_GROUP_DN: ${LDAP_VIEWER_GROUP_DN}
+      LDAP_ADMIN_GROUP_DN: ${LDAP_ADMIN_GROUP_DN}
+      LDAP_TLS: ${LDAP_TLS:-true}
+      LDAP_SKIP_CERT_CHECK: ${LDAP_SKIP_CERT_CHECK:-false}
+      SESSION_SECRET: ${SESSION_SECRET}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    # Port 3000 is NOT exposed to the host — only accessible via Caddy on the acm network
+    expose:
+      - "3000"
+    networks:
+      - acm
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/v1/healthz"]
+      interval: 30s
       timeout: 5s
-      retries: 10
+      retries: 5
+      start_period: 30s
+    # Non-root user (PITFALL #9: explicit UID matches appuser in Dockerfile)
+    user: "1000:1000"
 
+  # ── PostgreSQL 16 ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: acm-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: acm_kpi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      # :Z label for SELinux compatibility (ASSUMPTION: confirm with IT)
+      - postgres_data:/var/lib/postgresql/data:Z
+    networks:
+      - acm
+    # Port 5432 NOT exposed to host in production (only via acm internal network)
+    # The dev override (docker-compose.override.yml) exposes 5432 for drizzle-kit
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d acm_kpi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    # postgres official image uses UID 999
+    user: "999:999"
+
+  # ── Redis 7 (Phase 2 scaffold — Bull job queue for SMB watcher) ────────────
+  # Not a hard dependency for Phase 1 health checks.
+  # No ports exposed — internal use only via `acm` network.
+  redis:
+    image: redis:7-alpine
+    container_name: acm-redis
+    restart: unless-stopped
+    expose:
+      - "6379"
+    networks:
+      - acm
+    volumes:
+      - redis_data:/data:Z
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+# ── Networks ───────────────────────────────────────────────────────────────────
+networks:
+  acm:
+    driver: bridge
+    # `internal: false` is required so Caddy can reach the internet for `tls internal`
+    # (Caddy needs to resolve OCSP / CA endpoints even in dev mode).
+    # For production with a pre-provisioned cert, set `internal: true` and remove
+    # any ACME/Let's Encrypt configuration.
+    internal: false
+
+# ── Volumes ────────────────────────────────────────────────────────────────────
 volumes:
   postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+  # Shared volume between frontend-build (writes) and caddy (reads)
+  frontend_dist:
+    driver: local
