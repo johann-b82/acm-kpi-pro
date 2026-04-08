@@ -5,6 +5,7 @@ import type { AppConfig } from "./config.js";
 import { checkDbConnection } from "./db/index.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
+import { registerKpiRoutes } from "./kpi/routes.js";
 import { LDAPService } from "./services/ldap.service.js";
 
 /**
@@ -62,6 +63,9 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
   // Admin routes: /admin/ping and future admin endpoints (AUTH-04)
   await registerAdminRoutes(server, config);
+
+  // KPI routes: /api/v1/kpi/summary, /api/v1/kpi/articles, /api/v1/kpi/meta (Phase 3)
+  await registerKpiRoutes(server, config);
 
   // ─── Global error handler ─────────────────────────────────────────────────
   server.setErrorHandler((error: Error & { statusCode?: number }, _request, reply) => {
