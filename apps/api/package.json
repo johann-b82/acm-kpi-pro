@@ -6,6 +6,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc --build",
     "test": "vitest run",
+    "ingest:local": "tsx src/scripts/ingest-local.ts",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio"
