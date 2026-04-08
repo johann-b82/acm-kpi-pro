@@ -12,8 +12,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-08)
 
 - **Milestone:** v1 (initial release)
 - **Phases completed:** 0 / 8
-- **Phase in progress:** None (roadmap complete; ready to plan Phase 1)
-- **Next action:** `/gsd:plan-phase 1`
+- **Phase in progress:** Phase 1 — Foundation & Auth (Plan 4 of N complete)
+- **Last completed plan:** 01-04 Fastify API skeleton
+- **Next action:** Plan 05 — LDAP auth
 
 ## Artifacts
 
@@ -69,5 +70,19 @@ From `.planning/config.json`:
 - Verifier agent: yes
 - Nyquist validation: yes
 
+## Decisions
+
+| Phase | Decision |
+|-------|----------|
+| 01-04 | /healthz ldap_reachable returns boolean false stub (not object) until Plan 05 wires ldapts |
+| 01-04 | LOG_LEVEL enum extended with "silent" to support Vitest runs |
+| 01-04 | pino-pretty transport applied only in development; production uses plain pino JSON |
+
+## Performance Metrics
+
+| Phase | Plan | Duration | Tasks | Files |
+|-------|------|----------|-------|-------|
+| 01 | 04 | ~25 min | 2/2 | 5 |
+
 ---
-*Last updated: 2026-04-08 after project initialization*
+*Last updated: 2026-04-08 after 01-04 Fastify API skeleton*
