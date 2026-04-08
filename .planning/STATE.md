@@ -12,9 +12,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-08)
 
 - **Milestone:** v1 (initial release)
 - **Phases completed:** 0 / 8
-- **Phase in progress:** Phase 1 — Foundation & Auth (Plan 4 of N complete)
-- **Last completed plan:** 01-04 Fastify API skeleton
-- **Next action:** Plan 05 — LDAP auth
+- **Phase in progress:** Phase 1 — Foundation & Auth (Plan 6 of N complete)
+- **Last completed plan:** 01-06 React frontend shell
+- **Next action:** Plan 05 — LDAP auth (or Plan 07 — Caddy + Docker Compose)
 
 ## Artifacts
 
@@ -77,12 +77,16 @@ From `.planning/config.json`:
 | 01-04 | /healthz ldap_reachable returns boolean false stub (not object) until Plan 05 wires ldapts |
 | 01-04 | LOG_LEVEL enum extended with "silent" to support Vitest runs |
 | 01-04 | pino-pretty transport applied only in development; production uses plain pino JSON |
+| 01-06 | Vite 8 uses rolldown; manualChunks must be a function — object form raises TypeError |
+| 01-06 | vite-env.d.ts required for tsc to accept CSS side-effect imports in strict mode |
+| 01-06 | POST /api/v1/auth/login deferred to Plan 05; login form structurally complete but cannot be live-tested yet |
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Tasks | Files |
 |-------|------|----------|-------|-------|
 | 01 | 04 | ~25 min | 2/2 | 5 |
+| 01 | 06 | ~15 min | 2/2 | 20 |
 
 ---
-*Last updated: 2026-04-08 after 01-04 Fastify API skeleton*
+*Last updated: 2026-04-08 after 01-06 React frontend shell*
