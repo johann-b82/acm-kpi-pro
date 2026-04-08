@@ -89,21 +89,24 @@ describe("insertStockRowsAtomic — Pitfall #10 atomicity", () => {
   });
 
   test("on DB error mid-insert, throws and does NOT resolve with success", async () => {
-    // Simulate DB throwing inside the transaction callback
+    // Simulate DB throwing during the atomic swap (TRUNCATE stock_rows execute call).
+    // The staging INSERT resolves but the swap step throws, simulating a mid-swap
+    // failure. Drizzle propagates the rejection → auto-rollback → stock_rows untouched.
+    let executeCallCount = 0;
     vi.mocked(db).transaction = vi.fn().mockImplementation(async (cb: any) => {
-      // Start callback but throw before commit (simulates mid-insert failure)
       const fakeTx = {
-        insert: vi
-          .fn()
-          .mockReturnValueOnce({
-            values: vi.fn().mockResolvedValue([]), // first batch succeeds
-          })
-          .mockReturnValueOnce({
-            values: vi
-              .fn()
-              .mockRejectedValue(new Error("DB constraint violation")), // second fails
-          }),
-        execute: vi.fn().mockResolvedValue(undefined),
+        insert: vi.fn().mockReturnValue({
+          values: vi.fn().mockResolvedValue([]), // staging batch insert succeeds
+        }),
+        execute: vi.fn().mockImplementation(() => {
+          executeCallCount++;
+          // execute #1: TRUNCATE stock_rows_staging → succeeds
+          // execute #2: TRUNCATE stock_rows (the swap) → throws (simulates mid-swap)
+          if (executeCallCount === 2) {
+            return Promise.reject(new Error("DB constraint violation"));
+          }
+          return Promise.resolve(undefined);
+        }),
       };
       return cb(fakeTx); // Drizzle propagates the rejection → auto-rollback
     });
