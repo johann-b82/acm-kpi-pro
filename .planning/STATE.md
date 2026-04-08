@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-04-08T15:07:26.254Z"
+last_updated: "2026-04-08T15:16:05.700Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -111,6 +111,9 @@ From `.planning/config.json`:
 - [02-03]: tsc --build --force needed after manual dist cleanup in TypeScript 6.0.2 (incremental cache mismatch)
 - [Phase 02]: surplus-aware decimal-comma re-merge with per-column maxFractionalDigits prevents greedy merges on zero-value rows
 - [Phase 02]: CP1252 binary test fixture (LagBes-sample-cp1252.csv) required because UTF-8 sample mojibakes through cp1252 decode pipeline
+- [Phase 02-05]: Batch size fixed at 500 rows per INSERT (IN-12); tested with 1200-row assertion
+- [Phase 02-05]: Date fields serialised to YYYY-MM-DD strings for Drizzle pg-core date columns
+- [Phase 02-05]: Mid-swap atomicity test uses execute() failure — simulates TRUNCATE stock_rows failure with 3 rows
 
 ## Performance Metrics
 
@@ -126,3 +129,4 @@ From `.planning/config.json`:
 | Phase 02-csv-ingestion-core P02-02 | 45 | 2 tasks | 6 files |
 | 02 | 03 | ~10 min | 2/2 | 2 |
 | Phase 02 P02-04 | 50 | 2 tasks | 10 files |
+| Phase 02-csv-ingestion-core P02-05 | 5 | 2 tasks | 2 files |

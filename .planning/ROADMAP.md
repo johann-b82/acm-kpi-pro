@@ -10,7 +10,7 @@
 ## Phases
 
 - [ ] **Phase 1: Foundation & Auth** — Docker Compose stack, LDAP login, session persistence, role scaffold
-- [ ] **Phase 2: CSV Ingestion Core** — Parser (decimal-comma fix), validation, atomic DB insert, audit logging
+- [x] **Phase 2: CSV Ingestion Core** — Parser (decimal-comma fix), validation, atomic DB insert, audit logging (completed 2026-04-08)
 - [ ] **Phase 3: KPI Layer & Dashboard** — Materialized view, 7 KPI cards, executive view, polling, stale-data banner
 - [ ] **Phase 4: Upload Page** — Browser drag-and-drop, progress, validation error summary, admin-only
 - [ ] **Phase 5: SMB Folder Watcher** — Chokidar polling, file-stability check, Bull job convergence

@@ -15,7 +15,7 @@
 - [x] **IN-06**: The parser correctly interprets `DD.MM.YY` dates, inferring the century sensibly.
 - [x] **IN-07**: The parser accepts both `.csv` and `.txt` file extensions.
 - [ ] **IN-08**: The folder watcher detects new files only after they are stable (size + mtime unchanged for ≥1 second) to avoid ingesting partially-written files.
-- [ ] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
+- [x] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
 - [x] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
 - [x] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
 - [ ] **IN-12**: The ingestion pipeline completes a typical-size file (10k rows) in under 60 seconds end-to-end on the target host.
@@ -195,7 +195,7 @@
 | IN-06 | Phase 2 | Complete |
 | IN-07 | Phase 2 | Complete |
 | IN-08 | Phase 5 | Pending |
-| IN-09 | Phase 2 | Pending |
+| IN-09 | Phase 2 | Complete |
 | IN-10 | Phase 2 | Complete |
 | IN-11 | Phase 2 | Complete |
 | IN-12 | Phase 2 | Pending |
