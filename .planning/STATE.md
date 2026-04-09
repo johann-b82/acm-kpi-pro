@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 04
-last_updated: "2026-04-09T13:59:14.724Z"
+last_updated: "2026-04-09T14:05:43.660Z"
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 8
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -132,6 +132,8 @@ From `.planning/config.json`:
 - [Phase 04-upload-page]: 04-01: Viewer 403 test uses empty body (RBAC runs before body parse — real multipart body causes fastify.inject deadlock)
 - [Phase 04-02]: Local UploadResponse in features/upload/types.ts to break cross-plan race with 04-01; plan 04-05 will switch to @acm-kpi/core import
 - [Phase 04-02]: Role gate lives in UploadPage (not ProtectedRoute); ProtectedRoute = auth, UploadPage = authorisation (Viewer sees AdminAccessDenied)
+- [Phase 04-upload-page]: 04-03: Radix Progress owns role=progressbar/aria-valuenow — no wrapper div (avoids duplicate a11y nodes)
+- [Phase 04-upload-page]: 04-03: currentFilename tracked in UploadPage local state (not useUpload hook) to keep hook focused on XHR mechanics
 
 ## Performance Metrics
 
@@ -157,3 +159,4 @@ From `.planning/config.json`:
 | Phase 03-kpi-layer-dashboard P03-07 | 65 | 2 tasks | 23 files |
 | Phase 04-upload-page P01 | 30 | 2 tasks | 8 files |
 | Phase 04 P02 | 50 | 2 tasks | 10 files |
+| Phase 04-upload-page P03 | 12 | 1 tasks | 6 files |
