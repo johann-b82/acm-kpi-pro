@@ -15,3 +15,11 @@ export type {
 } from "./kpi/types.js";
 export type { CsvIngestionJobPayload } from "./types/job.js";
 export * from "./ingest/types.js";
+export type {
+  UploadSuccessResponse,
+  UploadErrorResponse,
+  UploadResponse,
+  HeadlineKpis,
+  KpiDeltaField,
+  UploadKpiDelta,
+} from "./upload/types.js";
