@@ -6,12 +6,12 @@
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/styles/global.css",
-    "baseColor": "blue",
+    "baseColor": "slate",
     "cssVariables": true
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui"
+    "components": "src/components",
+    "utils": "src/lib/utils",
+    "ui": "src/components/ui"
   }
 }
