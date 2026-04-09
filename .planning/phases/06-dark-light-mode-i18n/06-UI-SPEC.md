@@ -114,13 +114,15 @@ Recommended starting values (to be refined during execution):
 | Role | Size | Weight | Line Height | Font |
 |------|------|--------|-------------|------|
 | Body | 14px / 16px | 400 (regular) | 1.5 | Inter |
-| Label | 12px | 500 (medium) | 1.4 | Inter |
+| Label | 12px | 400 (regular) | 1.4 | Inter |
 | Heading (card titles) | 16px | 600 (semibold) | 1.2 | Inter |
-| Display (dashboard section) | 20px | 700 (bold) | 1.1 | Inter |
+| Display (dashboard section) | 20px | 600 (semibold) | 1.1 | Inter |
 
 **Font stack:** `Inter, system-ui, sans-serif` (tailwind config, Phase 1)
 
 **Constraint:** Body text minimum 16px on mobile (inherited from ui-ux-pro-max skill rule). Phase 6 locks 16px for mobile, 14px acceptable only on desktop with explicit layout verification.
+
+**Weight constraint:** Maximum 2 font weights (400 regular and 600 semibold) to prevent visual noise and cognitive load. All body text, labels, and small UI elements use 400; headings and display-level elements use 600.
 
 ---
 
@@ -731,7 +733,7 @@ Recommended execution sequence to minimize rework:
 - [ ] Dimension 1 Copywriting: All hardcoded English strings replaced with i18n keys; key parity enforced by CI
 - [ ] Dimension 2 Visuals: Dark palette meets 4.5:1 body text contrast, 7:1 KPI card contrast; screenshot tests pass
 - [ ] Dimension 3 Color: KPI status tokens tuned independently per theme; contrast verified
-- [ ] Dimension 4 Typography: Body font size ≥16px on mobile, 14px on desktop with layout verification
+- [ ] Dimension 4 Typography: Body font size ≥16px on mobile, 14px on desktop with layout verification; exactly 2 font weights (400/600)
 - [ ] Dimension 5 Spacing: Theme + language toggles fit within existing header 44px height; all spacing multiples of 4
 - [ ] Dimension 6 Registry Safety: No third-party registries introduced; existing shadcn components only
 
@@ -755,5 +757,5 @@ Recommended execution sequence to minimize rework:
 ---
 
 *Phase: 06-dark-light-mode-i18n*
-*UI-SPEC created: 2026-04-09*
-*Pre-populated from CONTEXT.md (user decisions locked, no research questions asked)*
+*UI-SPEC revised: 2026-04-09*
+*Typography weights reduced to maximum 2 (400 regular, 600 semibold) per design quality constraint*
