@@ -28,6 +28,7 @@ must_haves:
     - "After failed ingest, file is moved to failed/YYYY-MM-DD/ with adjacent .error.json sidecar"
     - "Watcher configuration (share path, poll interval, pattern, stability window) is read from env vars"
     - "processed/** and failed/** are never re-watched"
+    - "Files present in the watched root at watcher startup are ingested (not skipped) — D-03 startup catch-up"
   artifacts:
     - path: "apps/api/src/watcher/index.ts"
       provides: "Watcher bootstrap: creates chokidar instance, wires add event, calls ingestLagBesFile"
@@ -209,8 +210,10 @@ imports.status  // text: 'pending'|'running'|'success'|'failed'
         ignored: [/[\\/](processed|failed)[\\/]/],
         depth: 0,
         persistent: true,
+        ignoreInitial: false,  // D-03: emit add for pre-existing root files on startup (catch-up)
       })
       ```
+    - `ignoreInitial: false` is chokidar's default but MUST be set explicitly so the startup catch-up intent is unambiguous. This causes chokidar to fire `add` for every matching file in the watched root on first scan, enabling the D-03 catch-up without any extra code. `processed/**` and `failed/**` are excluded by the `ignored` regex so archived files are never re-ingested.
     - Listens to the `add` event (new files only — no `change` events to avoid re-ingesting the same file).
     - File pattern matching: only process files where `path.basename(filePath)` matches the configured `WATCHER_FILE_PATTERN` glob (use `minimatch` or simple `startsWith` — prefer `picomatch` which is already a transitive dep of chokidar).
     - On `add` event for a matching file:
@@ -308,7 +311,8 @@ imports.status  // text: 'pending'|'running'|'success'|'failed'
     **index.ts** — watcher bootstrap. Key implementation points per D-01 through D-09:
     - Import: chokidar, path/basename, fs/promises, pino, node:path, db schema (imports table), drizzle eq
     - `startWatcher` accepts (config: AppConfig, logger: pino.Logger, db: IngestDb) and returns FSWatcher | null
-    - chokidar config: `{ usePolling: true, interval: config.WATCHER_POLL_INTERVAL_MS, awaitWriteFinish: { stabilityThreshold: config.WATCHER_STABILITY_WINDOW_MS, pollInterval: 100 }, ignored: [/[\\/](processed|failed)[\\/]/], depth: 0, persistent: true }`
+    - chokidar config: `{ usePolling: true, interval: config.WATCHER_POLL_INTERVAL_MS, awaitWriteFinish: { stabilityThreshold: config.WATCHER_STABILITY_WINDOW_MS, pollInterval: 100 }, ignored: [/[\\/](processed|failed)[\\/]/], depth: 0, persistent: true, ignoreInitial: false }`
+    - `ignoreInitial: false` is explicit (D-03 catch-up): chokidar fires `add` for every pre-existing root file on first scan. The `ignored` regex prevents `processed/**` and `failed/**` from triggering these events.
     - Use `picomatch` (already a dep via chokidar) or a simple `filename.startsWith("LagBes")` check for WATCHER_FILE_PATTERN matching. Prefer picomatch: `import pm from "picomatch"; const isMatch = pm(config.WATCHER_FILE_PATTERN);`
     - Module-level `watcherStatus` object updated after each ingest
     - Export `getWatcherStatus()` for healthz route to call
@@ -323,6 +327,7 @@ imports.status  // text: 'pending'|'running'|'success'|'failed'
     - `grep -n "usePolling: true" apps/api/src/watcher/index.ts` returns a match
     - `grep -n "awaitWriteFinish" apps/api/src/watcher/index.ts` returns a match with `stabilityThreshold`
     - `grep -n "ignored.*processed.*failed" apps/api/src/watcher/index.ts` returns a match
+    - `grep -n "ignoreInitial: false" apps/api/src/watcher/index.ts` returns a match (D-03 startup catch-up)
     - `grep -n "ingestLagBesFile" apps/api/src/watcher/index.ts` returns a match with `"watcher"`
     - `grep -n "resolveProcessedPath\|resolveFailedPath" apps/api/src/watcher/index.ts` returns matches for both
     - `grep -n "getWatcherStatus" apps/api/src/watcher/index.ts` returns an export
@@ -331,7 +336,7 @@ imports.status  // text: 'pending'|'running'|'success'|'failed'
     - `grep -n "WatcherErrorLog\|buildErrorLog" apps/api/src/watcher/path-resolver.ts` returns both
     - `pnpm --filter @acm-kpi/api exec tsc --noEmit` exits 0
   </acceptance_criteria>
-  <done>All three watcher module files compile cleanly. Watcher logic is complete: chokidar configured with polling, awaitWriteFinish, ignored patterns; ingestLagBesFile called on add events; post-ingest archiving to processed/ or failed/ with .error.json sidecar; getWatcherStatus exported for healthz.</done>
+  <done>All three watcher module files compile cleanly. Watcher logic is complete: chokidar configured with usePolling, awaitWriteFinish, ignoreInitial:false (D-03 catch-up), ignored patterns; ingestLagBesFile called on add events; post-ingest archiving to processed/ or failed/ with .error.json sidecar; getWatcherStatus exported for healthz.</done>
 </task>
 
 </tasks>
@@ -341,6 +346,7 @@ After both tasks:
 - `pnpm --filter @acm-kpi/api exec tsc --noEmit` passes with zero errors
 - `grep -rn "WATCHER_ENABLED\|WATCHER_SHARE_PATH\|WATCHER_POLL_INTERVAL_MS\|WATCHER_STABILITY_WINDOW_MS\|WATCHER_BUSY_WAIT_MAX_RETRIES\|WATCHER_FILE_PATTERN" apps/api/src/config.ts` returns 6 matches
 - `ls apps/api/src/watcher/` lists stability.ts, path-resolver.ts, index.ts
+- `grep -n "ignoreInitial: false" apps/api/src/watcher/index.ts` returns a match (proves D-03 catch-up is explicit)
 </verification>
 
 <success_criteria>
@@ -348,7 +354,7 @@ After both tasks:
 - config.ts has all 6 WATCHER_* env vars with correct defaults
 - apps/api/src/watcher/ contains stability.ts, path-resolver.ts, index.ts
 - All three files compile under tsc --noEmit
-- Watcher: usePolling=true, awaitWriteFinish configured, processed|failed ignored, depth:0
+- Watcher: usePolling=true, awaitWriteFinish configured, ignoreInitial:false (D-03), processed|failed ignored, depth:0
 - Watcher calls ingestLagBesFile(path, "watcher", { db }) on add events
 - Post-ingest: success → processed/YYYY-MM-DD/, failure → failed/YYYY-MM-DD/ + .error.json
 - getWatcherStatus() exported with { enabled, lastIngestionAt, lastIngestionStatus, lastFile }

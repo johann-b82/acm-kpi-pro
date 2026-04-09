@@ -30,6 +30,7 @@ must_haves:
     - "watcher integration test: failed ingest → file moved to failed/ → .error.json written"
     - "watcher skips files not matching WATCHER_FILE_PATTERN glob"
     - "watcher ignores files inside processed/ and failed/ subfolders"
+    - "startup catch-up (D-03): when watcher starts with a pre-existing LagBes*.csv in the root, ingestLagBesFile is called exactly once and the file moves to processed/YYYY-MM-DD/"
   artifacts:
     - path: "apps/api/src/watcher/__tests__/stability.test.ts"
       provides: "Unit tests for isSizeAndMtimeStable pure function"
@@ -159,6 +160,8 @@ export async function ingestLagBesFile(filePath: string, source: IngestSource, o
 
     Test 5 (busy-wait): mock db query returns [{id:1}] (running import) → ingestLagBesFile NOT called immediately → after WATCHER_BUSY_WAIT_MAX_RETRIES retries: file moved to failed/ with message "Ingest busy: max retries exceeded"
 
+    Test 6 (startup catch-up — D-03): startWatcher is called with a config pointing at a directory that already contains "LagBes_existing.csv". The mock chokidar fires an "add" event immediately on startup (simulating ignoreInitial:false behaviour on first scan). Assert: ingestLagBesFile is called exactly once with "LagBes_existing.csv" and source "watcher"; fs.rename is called with a destination path containing "processed/". This test proves the D-03 catch-up works without any extra code — the same add-event handler that processes new files also handles pre-existing files emitted at startup.
+
   </behavior>
   <implementation>
     1. Create packages/core/src/ingest/error.ts: export WatcherErrorLog interface (copy from path-resolver.ts — keep both in sync; path-resolver imports from @acm-kpi/core in a future refactor but for now define in both places to avoid circular deps between apps/api and packages/core).
@@ -169,6 +172,7 @@ export async function ingestLagBesFile(filePath: string, source: IngestSource, o
     3. Write path-resolver.test.ts — no mocks (pure functions).
 
     4. Write watcher.test.ts — mock chokidar, fs/promises, and ingest/index.
+       Test 6 (startup catch-up): simulate chokidar emitting "add" immediately after watch() is called (as it does when ignoreInitial:false and a file is already present). Assert ingestLagBesFile called once and file renamed to a "processed/" path.
 
     Test setup pattern (matches existing vitest setup in the codebase):
     - Use `vi.mock` at top level
@@ -191,6 +195,7 @@ All watcher tests pass. Existing tests continue to pass.
 - `grep -rn "vi.mock.*chokidar\|vi.mock.*ingest" apps/api/src/watcher/__tests__/watcher.test.ts` returns both mock declarations
 - `grep -n "processed\|failed\|error.json" apps/api/src/watcher/__tests__/watcher.test.ts` returns matches for file movement assertions
 - `grep -n "lastIngestionStatus" apps/api/src/watcher/__tests__/watcher.test.ts` returns at least 2 assertions
+- `grep -n "startup.*catch-up\|catch.up\|LagBes_existing\|ignoreInitial\|pre-existing" apps/api/src/watcher/__tests__/watcher.test.ts` returns a match for the D-03 startup catch-up test (Test 6)
 </success_criteria>
 
 <output>
