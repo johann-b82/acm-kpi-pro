@@ -12,7 +12,7 @@ Executives see the health of ACM's inventory and production at a glance — on a
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] **Upload page** — separate route, reached via an icon button in the top-right corner of the main dashboard. Drag-and-drop + file picker. *Validated in Phase 4: Upload Page (2026-04-09) — pending live-stack human UAT.*
 
 ### Active
 
@@ -24,7 +24,6 @@ Executives see the health of ACM's inventory and production at a glance — on a
   - Slow movers & dead stock — aging buckets based on `Lagerabgang Dat` / `letzt.Zugang`
   - Stockouts & low-stock alerts — rows with ≤ 0 stock or below computed thresholds
 - [ ] **Slice & filter** — by warehouse (`Lagername`), product group (`WGR` / `ProdGrp`), ABC class, article type (`Typ`: ART/MAT/HLB/WKZ).
-- [ ] **Upload page** — separate route, reached via an icon button in the top-right corner of the main dashboard. Drag-and-drop + file picker.
 - [ ] **User docs site** — separate route, reached via a second icon button in the top-right corner. Covers:
   - End-user guide (how to read the dashboard, what each KPI means)
   - Upload guide (how to upload a CSV, expected format, troubleshooting)
@@ -109,4 +108,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-08 after initialization*
+*Last updated: 2026-04-09 after Phase 4 (upload page) completion*
