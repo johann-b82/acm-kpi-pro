@@ -30,6 +30,17 @@ const configSchema = z.object({
   SESSION_SECRET: z.string().min(32),
 
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
+
+  // Watcher (Phase 5 — WAT-07)
+  WATCHER_ENABLED: z
+    .string()
+    .transform((v) => v.toLowerCase() === "true")
+    .default("false"),
+  WATCHER_SHARE_PATH: z.string().optional(),
+  WATCHER_FILE_PATTERN: z.string().default("LagBes*"),
+  WATCHER_POLL_INTERVAL_MS: z.coerce.number().int().min(500).default(5000),
+  WATCHER_STABILITY_WINDOW_MS: z.coerce.number().int().min(100).default(1000),
+  WATCHER_BUSY_WAIT_MAX_RETRIES: z.coerce.number().int().min(0).default(5),
 });
 
 export type AppConfig = z.infer<typeof configSchema>;

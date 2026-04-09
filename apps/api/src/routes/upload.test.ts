@@ -83,6 +83,12 @@ const testConfig: AppConfig = {
   LDAP_SKIP_CERT_CHECK: false,
   SESSION_SECRET: "test-secret-32-chars-long-minimum!!",
   LOG_LEVEL: "silent",
+  WATCHER_ENABLED: false,
+  WATCHER_SHARE_PATH: undefined,
+  WATCHER_FILE_PATTERN: "LagBes*",
+  WATCHER_POLL_INTERVAL_MS: 5000,
+  WATCHER_STABILITY_WINDOW_MS: 1000,
+  WATCHER_BUSY_WAIT_MAX_RETRIES: 5,
 };
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
