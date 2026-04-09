@@ -254,7 +254,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 05-01-watcher-core-PLAN.md — Install chokidar + config ext + watcher module (stability, path-resolver, index)
+- [x] 05-01-watcher-core-PLAN.md — Install chokidar + config ext + watcher module (stability, path-resolver, index)
 - [ ] 05-02-watcher-tests-PLAN.md — Unit + integration tests for all watcher behaviours
 - [ ] 05-03-server-wiring-PLAN.md — Wire watcher into Fastify server lifecycle + healthz + docker-compose
 

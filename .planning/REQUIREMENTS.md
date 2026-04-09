@@ -14,7 +14,7 @@
 - [x] **IN-05**: The parser correctly handles the German-decimal-comma-breaks-semicolon-delimiter quirk documented in `samples/README.md`, and passes a golden-file test against `samples/LagBes-sample.csv`.
 - [x] **IN-06**: The parser correctly interprets `DD.MM.YY` dates, inferring the century sensibly.
 - [x] **IN-07**: The parser accepts both `.csv` and `.txt` file extensions.
-- [ ] **IN-08**: The folder watcher detects new files only after they are stable (size + mtime unchanged for ≥1 second) to avoid ingesting partially-written files.
+- [x] **IN-08**: The folder watcher detects new files only after they are stable (size + mtime unchanged for ≥1 second) to avoid ingesting partially-written files.
 - [x] **IN-09**: A new import replaces the previous snapshot atomically — if parsing or validation fails, the previous snapshot remains untouched.
 - [x] **IN-10**: Every import attempt (success or failure) is recorded in an `imports` audit table with filename, row count, status, operator (if via upload), timestamp, and any error message.
 - [x] **IN-11**: Validation errors in the CSV are collected and reported *all at once* (not fail-on-first), with row numbers and a human-readable reason.
@@ -60,13 +60,13 @@
 
 ### Folder Watcher (WAT)
 
-- [ ] **WAT-01**: A background watcher polls a mounted SMB share for new files matching the `LagBes*` pattern (configurable).
-- [ ] **WAT-02**: Watcher uses chokidar with polling enabled (inotify does not work on SMB).
-- [ ] **WAT-03**: Detected files are enqueued to the same Bull job the upload path uses.
-- [ ] **WAT-04**: After successful ingestion, the file is moved to a `processed/` subfolder (dated) to avoid re-ingestion.
-- [ ] **WAT-05**: After failed ingestion, the file is moved to a `failed/` subfolder with an adjacent `.error` log file.
+- [x] **WAT-01**: A background watcher polls a mounted SMB share for new files matching the `LagBes*` pattern (configurable).
+- [x] **WAT-02**: Watcher uses chokidar with polling enabled (inotify does not work on SMB).
+- [x] **WAT-03**: Detected files are enqueued to the same Bull job the upload path uses.
+- [x] **WAT-04**: After successful ingestion, the file is moved to a `processed/` subfolder (dated) to avoid re-ingestion.
+- [x] **WAT-05**: After failed ingestion, the file is moved to a `failed/` subfolder with an adjacent `.error` log file.
 - [ ] **WAT-06**: The `/healthz` endpoint reports the last ingestion timestamp and status so monitoring tools and the dashboard banner can surface stale data.
-- [ ] **WAT-07**: Watcher configuration (share path, poll interval, file pattern) is read from environment variables or a config file.
+- [x] **WAT-07**: Watcher configuration (share path, poll interval, file pattern) is read from environment variables or a config file.
 
 ### Authentication & Authorization (AUTH)
 
@@ -194,7 +194,7 @@
 | IN-05 | Phase 2 | Complete |
 | IN-06 | Phase 2 | Complete |
 | IN-07 | Phase 2 | Complete |
-| IN-08 | Phase 5 | Pending |
+| IN-08 | Phase 5 | Complete |
 | IN-09 | Phase 2 | Complete |
 | IN-10 | Phase 2 | Complete |
 | IN-11 | Phase 2 | Complete |
@@ -228,13 +228,13 @@
 | UP-05 | Phase 4 | Complete |
 | UP-06 | Phase 4 | Complete |
 | UP-07 | Phase 4 | Complete |
-| WAT-01 | Phase 5 | Pending |
-| WAT-02 | Phase 5 | Pending |
-| WAT-03 | Phase 5 | Pending |
-| WAT-04 | Phase 5 | Pending |
-| WAT-05 | Phase 5 | Pending |
+| WAT-01 | Phase 5 | Complete |
+| WAT-02 | Phase 5 | Complete |
+| WAT-03 | Phase 5 | Complete |
+| WAT-04 | Phase 5 | Complete |
+| WAT-05 | Phase 5 | Complete |
 | WAT-06 | Phase 5 | Pending |
-| WAT-07 | Phase 5 | Pending |
+| WAT-07 | Phase 5 | Complete |
 | AUTH-01 | Phase 1 | Complete (01-05) |
 | AUTH-02 | Phase 1 | Complete (01-05) |
 | AUTH-03 | Phase 1 | Complete (01-05) |

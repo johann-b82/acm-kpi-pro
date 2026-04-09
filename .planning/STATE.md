@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-last_updated: "2026-04-09T14:21:27.624Z"
+status: Executing Phase 05
+last_updated: "2026-04-09T15:08:55.586Z"
 progress:
   total_phases: 8
   completed_phases: 2
-  total_plans: 8
-  completed_plans: 6
+  total_plans: 11
+  completed_plans: 7
 ---
 
 # Project State
@@ -19,7 +19,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-08)
 
 **Core value:** Executives see the health of ACM's inventory and production at a glance — on a single dashboard — without touching Apollo NTS.
 
-**Current focus:** Phase 04 — upload-page
+**Current focus:** Phase 05 — smb-folder-watcher
 
 ## Status
 
@@ -140,6 +140,9 @@ From `.planning/config.json`:
 - [Phase 04-upload-page]: 04-05: playwright.config.ts uses workers=1 (serial) because upload tests share Postgres state
 - [Phase 04-upload-page]: 04-05: ESM __dirname shim via fileURLToPath(import.meta.url) required — workspace is type:module
 - [Phase 04-upload-page]: 04-05: webServer block deferred to Phase 08 CI wiring; Phase 04 e2e is manual-start
+- [Phase 05]: D-01 honored: ingestLagBesFile called in-process — no Bull/Redis
+- [Phase 05]: D-03 honored: ignoreInitial:false explicit for startup catch-up
+- [Phase 05]: matchesPattern() uses prefix/suffix split — avoids CJS picomatch interop in ESM workspace
 
 ## Performance Metrics
 
@@ -168,3 +171,4 @@ From `.planning/config.json`:
 | Phase 04-upload-page P03 | 12 | 1 tasks | 6 files |
 | Phase 04-upload-page P04 | 5 | 2 tasks | 5 files |
 | Phase 04-upload-page P05 | 15 | 2 tasks | 4 files |
+| Phase 05-smb-folder-watcher P01 | 417 | 2 tasks | 11 files |
