@@ -13,7 +13,7 @@
 - [x] **Phase 2: CSV Ingestion Core** — Parser (decimal-comma fix), validation, atomic DB insert, audit logging (completed 2026-04-08)
 - [ ] **Phase 3: KPI Layer & Dashboard** — Materialized view, 7 KPI cards, executive view, polling, stale-data banner
 - [ ] **Phase 4: Upload Page** — Browser drag-and-drop, progress, validation error summary, admin-only
-- [ ] **Phase 5: SMB Folder Watcher** — Chokidar polling, file-stability check, Bull job convergence
+- [x] **Phase 5: SMB Folder Watcher** — Chokidar polling, file-stability check, Bull job convergence (completed 2026-04-09)
 - [ ] **Phase 6: Dark/Light Mode + i18n** — Theme toggle (persisted), DE/EN (CI check), German formatting
 - [ ] **Phase 7: User Docs Site** — `/docs` route, end-user + upload + admin guides, changelog, all in DE/EN
 - [ ] **Phase 8: Deployment Hardening** — Target OS validation, TLS (internal CA), volume perms, backup runbook
@@ -251,11 +251,11 @@ Plans:
 
 **Can run in parallel with:** Phase 4, Phase 6, Phase 7
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 05-01-watcher-core-PLAN.md — Install chokidar + config ext + watcher module (stability, path-resolver, index)
-- [ ] 05-02-watcher-tests-PLAN.md — Unit + integration tests for all watcher behaviours
+- [x] 05-02-watcher-tests-PLAN.md — Unit + integration tests for all watcher behaviours
 - [x] 05-03-server-wiring-PLAN.md — Wire watcher into Fastify server lifecycle + healthz + docker-compose
 
 ---
