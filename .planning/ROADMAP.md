@@ -207,7 +207,7 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
-- [ ] 04-01-api-endpoint-PLAN.md — Shared DTOs + POST /api/v1/upload endpoint with RBAC + KPI delta
+- [x] 04-01-api-endpoint-PLAN.md — Shared DTOs + POST /api/v1/upload endpoint with RBAC + KPI delta
 - [ ] 04-02-frontend-scaffold-PLAN.md — Upload feature folder + DropZone + role-gated Header + route swap
 - [ ] 04-03-progress-ui-PLAN.md — ProgressView (determinate + indeterminate) + shadcn progress install
 - [ ] 04-04-success-error-views-PLAN.md — SuccessSummary + ErrorSummary + UploadPage full wiring

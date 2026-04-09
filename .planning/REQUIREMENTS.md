@@ -8,7 +8,7 @@
 ### Ingestion (IN)
 
 - [ ] **IN-01**: The system accepts CSV/TXT exports of the Apollo NTS `LagBes` warehouse stock file via browser upload (drag-and-drop + file picker).
-- [ ] **IN-02**: The system accepts the same file via an SMB folder watcher that watches a mounted share and processes new files automatically.
+- [x] **IN-02**: The system accepts the same file via an SMB folder watcher that watches a mounted share and processes new files automatically.
 - [x] **IN-03**: Browser upload and folder watcher converge on a single ingestion code path (same parser, same validation, same DB write).
 - [x] **IN-04**: The parser correctly handles Windows-1252 encoding and round-trips umlauts, ß, and `µ` characters without mojibake.
 - [x] **IN-05**: The parser correctly handles the German-decimal-comma-breaks-semicolon-delimiter quirk documented in `samples/README.md`, and passes a golden-file test against `samples/LagBes-sample.csv`.
@@ -56,7 +56,7 @@
 - [ ] **UP-04**: The upload page shows a progress indicator during upload and parsing.
 - [ ] **UP-05**: The upload page shows a success summary (rows imported, KPI snapshot delta) on completion.
 - [ ] **UP-06**: The upload page shows an error summary with all validation issues when a file fails.
-- [ ] **UP-07**: Only users with the Admin role can upload.
+- [x] **UP-07**: Only users with the Admin role can upload.
 
 ### Folder Watcher (WAT)
 
@@ -188,7 +188,7 @@
 | Requirement | Phase | Status |
 |---|---|---|
 | IN-01 | Phase 4 | Pending |
-| IN-02 | Phase 5 | Pending |
+| IN-02 | Phase 5 | Complete |
 | IN-03 | Phase 2 | Complete |
 | IN-04 | Phase 2 | Complete |
 | IN-05 | Phase 2 | Complete |
@@ -227,7 +227,7 @@
 | UP-04 | Phase 4 | Pending |
 | UP-05 | Phase 4 | Pending |
 | UP-06 | Phase 4 | Pending |
-| UP-07 | Phase 4 | Pending |
+| UP-07 | Phase 4 | Complete |
 | WAT-01 | Phase 5 | Pending |
 | WAT-02 | Phase 5 | Pending |
 | WAT-03 | Phase 5 | Pending |
