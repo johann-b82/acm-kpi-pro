@@ -204,6 +204,15 @@ Plans:
 
 **Can run in parallel with:** Phase 5, Phase 6, Phase 7
 
+**Plans:** 5 plans
+
+Plans:
+- [ ] 04-01-api-endpoint-PLAN.md — Shared DTOs + POST /api/v1/upload endpoint with RBAC + KPI delta
+- [ ] 04-02-frontend-scaffold-PLAN.md — Upload feature folder + DropZone + role-gated Header + route swap
+- [ ] 04-03-progress-ui-PLAN.md — ProgressView (determinate + indeterminate) + shadcn progress install
+- [ ] 04-04-success-error-views-PLAN.md — SuccessSummary + ErrorSummary + UploadPage full wiring
+- [ ] 04-05-e2e-wiring-PLAN.md — Playwright e2e test TEST-03 (admin + viewer flows)
+
 ---
 
 ### Phase 5: SMB Folder Watcher
