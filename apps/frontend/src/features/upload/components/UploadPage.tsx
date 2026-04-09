@@ -1,8 +1,22 @@
+import type {
+  UploadErrorResponse,
+  UploadSuccessResponse,
+} from "@acm-kpi/core";
+import { useState } from "react";
 import { Header } from "@/components/Header";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useUpload } from "../hooks/useUpload.js";
 import { AdminAccessDenied } from "./AdminAccessDenied.js";
 import { DropZone } from "./DropZone.js";
+import { ErrorSummary } from "./ErrorSummary.js";
+import { ProgressView } from "./ProgressView.js";
+import { SuccessSummary } from "./SuccessSummary.js";
 
 /**
  * /upload page (D-05: role gate + D-01: XHR state machine host).
@@ -14,7 +28,14 @@ import { DropZone } from "./DropZone.js";
  */
 export function UploadPage() {
   const { user } = useAuth();
-  const { state, uploadPercent, result, error, uploadFile } = useUpload();
+  const { state, uploadPercent, result, error, uploadFile, reset } =
+    useUpload();
+  const [currentFilename, setCurrentFilename] = useState("");
+
+  const handleFileSelected = (file: File) => {
+    setCurrentFilename(file.name);
+    uploadFile(file);
+  };
 
   // ProtectedRoute already handled loading + unauthenticated redirect.
   if (!user) return null;
@@ -41,20 +62,18 @@ export function UploadPage() {
 
         {showDropZone && (
           <DropZone
-            onFileSelected={uploadFile}
+            onFileSelected={handleFileSelected}
             disabled={state !== "idle"}
             error={state === "idle" ? error : null}
           />
         )}
 
         {(state === "uploading" || state === "parsing") && (
-          <div
-            data-testid="progress-placeholder"
-            className="rounded-lg border border-dashed border-border p-6 text-center text-sm text-muted-foreground"
-          >
-            ProgressView placeholder — wired in plan 04-03 (
-            {state === "uploading" ? `${uploadPercent}%` : "parsing…"})
-          </div>
+          <ProgressView
+            state={state}
+            percent={uploadPercent}
+            filename={currentFilename}
+          />
         )}
 
         {state === "success" && result?.status === "success" && (
