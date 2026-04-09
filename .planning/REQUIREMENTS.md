@@ -54,8 +54,8 @@
 - [x] **UP-02**: The upload page supports drag-and-drop and a file picker fallback.
 - [x] **UP-03**: The upload page accepts `.csv` and `.txt` files.
 - [x] **UP-04**: The upload page shows a progress indicator during upload and parsing.
-- [ ] **UP-05**: The upload page shows a success summary (rows imported, KPI snapshot delta) on completion.
-- [ ] **UP-06**: The upload page shows an error summary with all validation issues when a file fails.
+- [x] **UP-05**: The upload page shows a success summary (rows imported, KPI snapshot delta) on completion.
+- [x] **UP-06**: The upload page shows an error summary with all validation issues when a file fails.
 - [x] **UP-07**: Only users with the Admin role can upload.
 
 ### Folder Watcher (WAT)
@@ -225,8 +225,8 @@
 | UP-02 | Phase 4 | Complete |
 | UP-03 | Phase 4 | Complete |
 | UP-04 | Phase 4 | Complete |
-| UP-05 | Phase 4 | Pending |
-| UP-06 | Phase 4 | Pending |
+| UP-05 | Phase 4 | Complete |
+| UP-06 | Phase 4 | Complete |
 | UP-07 | Phase 4 | Complete |
 | WAT-01 | Phase 5 | Pending |
 | WAT-02 | Phase 5 | Pending |

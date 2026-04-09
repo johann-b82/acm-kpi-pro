@@ -210,7 +210,7 @@ Plans:
 - [x] 04-01-api-endpoint-PLAN.md — Shared DTOs + POST /api/v1/upload endpoint with RBAC + KPI delta
 - [x] 04-02-frontend-scaffold-PLAN.md — Upload feature folder + DropZone + role-gated Header + route swap
 - [x] 04-03-progress-ui-PLAN.md — ProgressView (determinate + indeterminate) + shadcn progress install
-- [ ] 04-04-success-error-views-PLAN.md — SuccessSummary + ErrorSummary + UploadPage full wiring
+- [x] 04-04-success-error-views-PLAN.md — SuccessSummary + ErrorSummary + UploadPage full wiring
 - [ ] 04-05-e2e-wiring-PLAN.md — Playwright e2e test TEST-03 (admin + viewer flows)
 
 ---

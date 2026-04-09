@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 04
-last_updated: "2026-04-09T14:05:43.660Z"
+last_updated: "2026-04-09T14:07:47.069Z"
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 8
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -134,6 +134,8 @@ From `.planning/config.json`:
 - [Phase 04-02]: Role gate lives in UploadPage (not ProtectedRoute); ProtectedRoute = auth, UploadPage = authorisation (Viewer sees AdminAccessDenied)
 - [Phase 04-upload-page]: 04-03: Radix Progress owns role=progressbar/aria-valuenow — no wrapper div (avoids duplicate a11y nodes)
 - [Phase 04-upload-page]: 04-03: currentFilename tracked in UploadPage local state (not useUpload hook) to keep hook focused on XHR mechanics
+- [Phase 04-upload-page]: 04-04: queryClient imported directly as singleton (not useQueryClient hook) — SuccessSummary invalidates ['kpi','summary'] then navigates away
+- [Phase 04-upload-page]: 04-04: Dead Stock % inversion flagged via invertedSign in KPI_DEFS — formatDeltaSign is single source of truth for sign semantics
 
 ## Performance Metrics
 
@@ -160,3 +162,4 @@ From `.planning/config.json`:
 | Phase 04-upload-page P01 | 30 | 2 tasks | 8 files |
 | Phase 04 P02 | 50 | 2 tasks | 10 files |
 | Phase 04-upload-page P03 | 12 | 1 tasks | 6 files |
+| Phase 04-upload-page P04 | 5 | 2 tasks | 5 files |
