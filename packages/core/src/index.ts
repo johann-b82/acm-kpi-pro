@@ -15,6 +15,7 @@ export type {
 } from "./kpi/types.js";
 export type { CsvIngestionJobPayload } from "./types/job.js";
 export * from "./ingest/types.js";
+export type { WatcherErrorLog } from "./ingest/error.js";
 export type {
   UploadSuccessResponse,
   UploadErrorResponse,
