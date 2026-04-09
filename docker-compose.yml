@@ -90,6 +90,15 @@ services:
       LDAP_SKIP_CERT_CHECK: ${LDAP_SKIP_CERT_CHECK:-false}
       SESSION_SECRET: ${SESSION_SECRET}
       LOG_LEVEL: ${LOG_LEVEL:-info}
+      # Watcher (Phase 5 — WAT-07)
+      WATCHER_ENABLED: ${WATCHER_ENABLED:-false}
+      WATCHER_SHARE_PATH: ${WATCHER_SHARE_PATH:-/mnt/smb}
+      WATCHER_FILE_PATTERN: ${WATCHER_FILE_PATTERN:-LagBes*}
+      WATCHER_POLL_INTERVAL_MS: ${WATCHER_POLL_INTERVAL_MS:-5000}
+      WATCHER_STABILITY_WINDOW_MS: ${WATCHER_STABILITY_WINDOW_MS:-1000}
+      WATCHER_BUSY_WAIT_MAX_RETRIES: ${WATCHER_BUSY_WAIT_MAX_RETRIES:-5}
+    volumes:
+      - smb_share:/mnt/smb:rw,Z
     # Port 3000 is NOT exposed to the host — only accessible via Caddy on the acm network
     expose:
       - "3000"
@@ -175,4 +184,9 @@ volumes:
     driver: local
   # Shared volume between frontend-build (writes) and caddy (reads)
   frontend_dist:
+    driver: local
+  # SMB share mount stub for the watcher (Phase 5 — WAT-07).
+  # Production override: replace with CIFS bind mount or host bind path.
+  # Example for CIFS: driver_opts: { type: cifs, o: "username=svc,password=***,uid=1001", device: "//ACM-NAS01/exports" }
+  smb_share:
     driver: local
