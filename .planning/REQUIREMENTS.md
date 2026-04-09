@@ -50,9 +50,9 @@
 
 ### Upload Page (UP)
 
-- [ ] **UP-01**: The upload page is a separate route reachable via an icon button in the top-right corner of the main dashboard.
-- [ ] **UP-02**: The upload page supports drag-and-drop and a file picker fallback.
-- [ ] **UP-03**: The upload page accepts `.csv` and `.txt` files.
+- [x] **UP-01**: The upload page is a separate route reachable via an icon button in the top-right corner of the main dashboard.
+- [x] **UP-02**: The upload page supports drag-and-drop and a file picker fallback.
+- [x] **UP-03**: The upload page accepts `.csv` and `.txt` files.
 - [ ] **UP-04**: The upload page shows a progress indicator during upload and parsing.
 - [ ] **UP-05**: The upload page shows a success summary (rows imported, KPI snapshot delta) on completion.
 - [ ] **UP-06**: The upload page shows an error summary with all validation issues when a file fails.
@@ -221,9 +221,9 @@
 | DASH-09 | Phase 6 | Pending |
 | DASH-10 | Phase 6 | Pending |
 | DASH-11 | Phase 3 | Complete |
-| UP-01 | Phase 4 | Pending |
-| UP-02 | Phase 4 | Pending |
-| UP-03 | Phase 4 | Pending |
+| UP-01 | Phase 4 | Complete |
+| UP-02 | Phase 4 | Complete |
+| UP-03 | Phase 4 | Complete |
 | UP-04 | Phase 4 | Pending |
 | UP-05 | Phase 4 | Pending |
 | UP-06 | Phase 4 | Pending |
