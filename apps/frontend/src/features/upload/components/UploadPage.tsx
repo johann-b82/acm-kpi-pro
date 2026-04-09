@@ -22,9 +22,8 @@ import { SuccessSummary } from "./SuccessSummary.js";
  * /upload page (D-05: role gate + D-01: XHR state machine host).
  *
  * - Viewers see <AdminAccessDenied />, never the DropZone.
- * - Admins see the DropZone, and the rest of the state machine slots in
- *   below it via data-testid placeholder divs that plans 03 and 04 will
- *   swap for the real ProgressView / SuccessSummary / ErrorSummary.
+ * - Admins see the DropZone, with ProgressView / SuccessSummary / ErrorSummary
+ *   rendered below it based on the current XHR state machine state.
  */
 export function UploadPage() {
   const { user } = useAuth();
@@ -77,22 +76,32 @@ export function UploadPage() {
         )}
 
         {state === "success" && result?.status === "success" && (
-          <div
-            data-testid="success-placeholder"
-            className="rounded-lg border border-dashed border-green-300 p-6 text-center text-sm text-muted-foreground"
-          >
-            SuccessSummary placeholder — wired in plan 04-04
-          </div>
+          <SuccessSummary
+            result={result as unknown as UploadSuccessResponse}
+            onReset={reset}
+          />
         )}
 
-        {state === "error" && (
-          <div
-            data-testid="error-placeholder"
-            className="rounded-lg border border-dashed border-red-300 p-6 text-center text-sm text-muted-foreground"
-          >
-            ErrorSummary placeholder — wired in plan 04-04
-            {error && <p className="mt-2 text-destructive">{error}</p>}
-          </div>
+        {state === "error" && result?.status === "failed" && (
+          <ErrorSummary
+            result={result as unknown as UploadErrorResponse}
+            onReset={reset}
+          />
+        )}
+
+        {state === "error" && !result && (
+          <Card className="border-2 border-red-200" aria-live="assertive">
+            <CardHeader>
+              <CardTitle className="text-lg text-red-600">
+                Upload failed
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-destructive">
+                {error ?? "An unknown error occurred."}
+              </p>
+            </CardContent>
+          </Card>
         )}
       </main>
     </div>
