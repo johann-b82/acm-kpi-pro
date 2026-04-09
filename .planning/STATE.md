@@ -123,6 +123,10 @@ From `.planning/config.json`:
 - [Phase 03-kpi-layer-dashboard]: Thenable chain pattern used for Drizzle query builder mocks in Vitest (not recursive makeChain)
 - [Phase 03-kpi-layer-dashboard]: recharts upgraded from 2.12.0 to 3.8.1 — 2.12.0 does not support React 19 peer dep
 - [Phase 03-kpi-layer-dashboard]: DashboardPage uses data-testid slot divs — Plan 03-07 swaps in real components without changing prop types
+- [03-07]: shadcn CLI aliases must use src/ prefix (not @/) to avoid literal "@/" directory creation
+- [03-07]: Recharts 3 Funnel.js triggers ETIMEDOUT in jsdom — vi.mock("recharts") required in integration tests
+- [03-07]: StaleDataBanner accepts pre-computed StalenessLevel (not timestamp) — avoids duplicate staleness computation
+- [03-07]: FilterBar uses empty-object spread for exactOptionalPropertyTypes:true compat when clearing filters
 
 ## Performance Metrics
 
@@ -134,7 +138,7 @@ From `.planning/config.json`:
 | 01 | 07 | ~25 min | 3/3 | 8 |
 
 ---
-*Last updated: 2026-04-08 after 02-03 FeedParser interface and ingest types*
+*Last updated: 2026-04-09 after 03-07 KPI dashboard components complete*
 | Phase 02-csv-ingestion-core P02-02 | 45 | 2 tasks | 6 files |
 | 02 | 03 | ~10 min | 2/2 | 2 |
 | Phase 02 P02-04 | 50 | 2 tasks | 10 files |
@@ -145,3 +149,4 @@ From `.planning/config.json`:
 | Phase 03-kpi-layer-dashboard P03-04 | 25 | 1 tasks | 3 files |
 | Phase 03-kpi-layer-dashboard P03-05 | 45m | 2 tasks | 6 files |
 | Phase 03-kpi-layer-dashboard P03-06 | 1200 | 2 tasks | 15 files |
+| Phase 03-kpi-layer-dashboard P03-07 | 65 | 2 tasks | 23 files |

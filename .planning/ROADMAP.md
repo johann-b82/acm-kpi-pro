@@ -160,7 +160,7 @@ Plans:
 - [ ] 03-04-PLAN-mv-refresh-hook.md — MV refresh hook in writer.ts (Phase 2 file, authorized)
 - [ ] 03-05-PLAN-api-endpoints.md — API: /summary, /articles, /meta endpoints + color computation
 - [ ] 03-06-PLAN-frontend-skeleton.md — React Query setup + hooks + DashboardPage skeleton
-- [ ] 03-07-PLAN-kpi-components.md — All KPI UI components (KpiGrid, SlowMoverChart, etc.)
+- [x] 03-07-PLAN-kpi-components.md — All KPI UI components (KpiGrid, SlowMoverChart, etc.)
 
 **Dependencies:** Phase 1, Phase 2
 
