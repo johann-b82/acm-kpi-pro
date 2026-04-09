@@ -6,7 +6,12 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "workspaces": ["apps/api", "apps/frontend", "apps/worker", "packages/core"],
+  "workspaces": [
+    "apps/api",
+    "apps/frontend",
+    "apps/worker",
+    "packages/core"
+  ],
   "scripts": {
     "dev": "concurrently \"npm -w apps/frontend run dev\" \"npm -w apps/api run dev\"",
     "build": "npm -w packages/core run build && npm -w apps/api run build && npm -w apps/frontend run build",
@@ -17,7 +22,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.0",
-    "typescript": "^6.0.2",
-    "concurrently": "^8.2.0"
+    "@playwright/test": "^1.59.1",
+    "concurrently": "^8.2.0",
+    "typescript": "^6.0.2"
   }
 }
