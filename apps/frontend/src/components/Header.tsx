@@ -59,17 +59,19 @@ export function Header({ lastUpdatedAt, onForceRefresh, isRefreshing }: HeaderPr
             </button>
           )}
 
-          {/* Upload icon button — routes to upload stub (UP-01) */}
-          <Link
-            to="/upload"
-            title="Upload data"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md
-                       text-muted-foreground hover:bg-muted hover:text-foreground
-                       transition-colors"
-          >
-            <Upload className="h-4 w-4" />
-            <span className="sr-only">Upload data</span>
-          </Link>
+          {/* Upload icon button — Admins only (UP-01, D-05) */}
+          {user?.role === "Admin" && (
+            <Link
+              to="/upload"
+              title="Upload data"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md
+                         text-muted-foreground hover:bg-muted hover:text-foreground
+                         transition-colors"
+            >
+              <Upload className="h-4 w-4" />
+              <span className="sr-only">Upload data</span>
+            </Link>
+          )}
 
           {/* Docs icon button (DOCS-01) */}
           <Link

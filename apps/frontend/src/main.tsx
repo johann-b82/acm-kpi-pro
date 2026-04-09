@@ -9,7 +9,7 @@ import { DashboardPage } from "./pages/DashboardPage.js";
 import { DocsStubPage } from "./pages/DocsStubPage.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { NotFoundPage } from "./pages/NotFoundPage.js";
-import { UploadStubPage } from "./pages/UploadStubPage.js";
+import { UploadPage } from "./features/upload/components/UploadPage.js";
 import "./styles/global.css";
 
 const root = document.getElementById("root");
@@ -33,7 +33,7 @@ ReactDOM.createRoot(root).render(
             path="/upload"
             element={
               <ProtectedRoute>
-                <UploadStubPage />
+                <UploadPage />
               </ProtectedRoute>
             }
           />
