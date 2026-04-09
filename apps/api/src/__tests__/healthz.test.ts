@@ -9,6 +9,18 @@ vi.mock("../db/index.js", () => ({
   db: {},
 }));
 
+// Mock watcher module — unit tests do not start a real chokidar watcher
+vi.mock("../watcher/index.js", () => ({
+  startWatcher: vi.fn().mockResolvedValue(null),
+  stopWatcher: vi.fn().mockResolvedValue(undefined),
+  getWatcherStatus: vi.fn().mockReturnValue({
+    enabled: false,
+    lastIngestionAt: null,
+    lastIngestionStatus: null,
+    lastFile: null,
+  }),
+}));
+
 // Mock LDAPService to avoid real AD connections
 vi.mock("../services/ldap.service.js", () => ({
   LDAPService: vi.fn().mockImplementation(() => ({

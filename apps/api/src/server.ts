@@ -9,6 +9,11 @@ import { registerAuthRoutes } from "./routes/auth.js";
 import { registerUploadRoutes } from "./routes/upload.js";
 import { registerKpiRoutes } from "./kpi/routes.js";
 import { LDAPService } from "./services/ldap.service.js";
+import { startWatcher, stopWatcher, getWatcherStatus } from "./watcher/index.js";
+import type { FSWatcher } from "chokidar";
+
+// Module-level watcher handle — one watcher per process (D-01 in-process architecture)
+let _watcher: FSWatcher | null = null;
 
 /**
  * Create and configure the Fastify instance.
@@ -57,13 +62,21 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
     const healthy = dbConnected;
 
+    // ─── Watcher status (Phase 5 — WAT-06, D-09) ────────────────────────────
+    const watcher = getWatcherStatus();
+
     return reply.code(healthy ? 200 : 503).send({
       status: healthy ? "ok" : "degraded",
       db_connected: dbConnected,
       ldap_reachable: ldapReachable,
-      // last_ingest_ts is populated in Phase 2 from the imports table
-      last_ingest_ts: null,
+      last_ingest_ts: watcher.lastIngestionAt,
       ts: new Date().toISOString(),
+      watcher: {
+        enabled: watcher.enabled,
+        last_ingest_ts: watcher.lastIngestionAt,
+        last_ingest_status: watcher.lastIngestionStatus,
+        last_file: watcher.lastFile,
+      },
     });
   });
 
@@ -78,6 +91,19 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
   // Upload route: POST /api/v1/upload (Phase 4 — UP-07, IN-02)
   await registerUploadRoutes(server, config);
+
+  // ─── Watcher lifecycle (Phase 5 — WAT-01, WAT-02) ────────────────────────
+  server.addHook("onReady", async () => {
+    const { db } = await import("./db/index.js");
+    _watcher = await startWatcher(config, server.log as unknown as import("pino").Logger, db);
+  });
+
+  server.addHook("onClose", async () => {
+    if (_watcher) {
+      await stopWatcher(_watcher);
+      _watcher = null;
+    }
+  });
 
   // ─── Global error handler ─────────────────────────────────────────────────
   server.setErrorHandler((error: Error & { statusCode?: number }, _request, reply) => {
