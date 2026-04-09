@@ -10,7 +10,7 @@
  *   all others:     always "neutral"
  */
 
-import type { KpiColor, KpiSummary } from "@acm-kpi/core";
+import type { ImportSource, KpiColor, KpiSummary } from "@acm-kpi/core";
 
 // ─── Sub-type mirrors for the MV row ─────────────────────────────────────────
 
@@ -139,7 +139,7 @@ export function computeKpiColors(
     last_import: {
       filename: lastImport.filename,
       row_count: lastImport.row_count ?? 0,
-      source: lastImport.source as KpiSummary["last_import"]["source"],
+      source: lastImport.source as ImportSource,
     },
     total_inventory_value: {
       value_eur: Number(mvRow.total_value_eur),
