@@ -1,24 +1,25 @@
-import { BookOpen, LogOut, Upload } from "lucide-react";
+import { BookOpen, LogOut, RefreshCw, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
+import { LastUpdatedBadge } from "../features/kpi/components/LastUpdatedBadge.js";
+import { cn } from "../lib/utils.js";
 
 interface HeaderProps {
-  /** ISO 8601 timestamp of last successful import. Plan 03-07 renders this. */
+  /** ISO 8601 timestamp of last successful import. Renders LastUpdatedBadge. */
   lastUpdatedAt?: string | null;
-  /** Callback for the force-refresh button. Plan 03-07 adds the button to the header. */
+  /** Callback for the force-refresh button. Shows a spinner while refreshing. */
   onForceRefresh?: () => void;
-  /** True while a background refetch is in progress. Plan 03-07 shows a spinner. */
+  /** True while a background refetch is in progress (shows spinning icon). */
   isRefreshing?: boolean;
 }
 
 /**
  * App header: ACM logo (BRAND-01) + upload + docs icon buttons (UP-01, DOCS-01 scaffolds)
- * + logout button.
+ * + optional last-updated badge + force-refresh button + logout.
  *
- * Optional props (lastUpdatedAt, onForceRefresh, isRefreshing) are accepted here
- * but not yet rendered — Plan 03-07 adds the LastUpdatedBadge and Refresh button.
+ * Plan 03-07: wires lastUpdatedAt, onForceRefresh, isRefreshing props.
  */
-export function Header(_props: HeaderProps = {}) {
+export function Header({ lastUpdatedAt, onForceRefresh, isRefreshing }: HeaderProps = {}) {
   const { user, logout } = useAuth();
 
   return (
@@ -31,7 +32,33 @@ export function Header(_props: HeaderProps = {}) {
         </Link>
 
         {/* Top-right controls */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
+          {/* Last updated timestamp badge (Plan 03-07) */}
+          {lastUpdatedAt !== undefined && (
+            <LastUpdatedBadge lastUpdatedAt={lastUpdatedAt ?? null} />
+          )}
+
+          {/* Force-refresh button (Plan 03-07) */}
+          {onForceRefresh && (
+            <button
+              type="button"
+              onClick={onForceRefresh}
+              disabled={isRefreshing}
+              aria-label="Refresh KPI data"
+              title="Refresh KPI data"
+              className={cn(
+                "inline-flex h-9 w-9 items-center justify-center rounded-md",
+                "text-muted-foreground hover:bg-muted hover:text-foreground",
+                "transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+              )}
+            >
+              <RefreshCw
+                className={cn("h-4 w-4", isRefreshing && "animate-spin")}
+              />
+              <span className="sr-only">Refresh KPI data</span>
+            </button>
+          )}
+
           {/* Upload icon button — routes to upload stub (UP-01) */}
           <Link
             to="/upload"
