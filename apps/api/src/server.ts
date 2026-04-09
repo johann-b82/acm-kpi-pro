@@ -1,10 +1,12 @@
 import fastifyCookie from "@fastify/cookie";
+import fastifyMultipart from "@fastify/multipart";
 import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
 import type { AppConfig } from "./config.js";
 import { checkDbConnection } from "./db/index.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
+import { registerUploadRoutes } from "./routes/upload.js";
 import { registerKpiRoutes } from "./kpi/routes.js";
 import { LDAPService } from "./services/ldap.service.js";
 
@@ -28,6 +30,13 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
   // Register cookie plugin (required by iron-session)
   await server.register(fastifyCookie);
+
+  // Register multipart plugin — required by POST /api/v1/upload (Phase 4).
+  // fileSize 10 MB per UP-07; files:1 enforces single-file upload at the plugin
+  // level so the upload handler never has to deal with multi-file payloads.
+  await server.register(fastifyMultipart, {
+    limits: { fileSize: 10 * 1024 * 1024, files: 1 },
+  });
 
   // ─── Services ─────────────────────────────────────────────────────────────
 
@@ -66,6 +75,9 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
   // KPI routes: /api/v1/kpi/summary, /api/v1/kpi/articles, /api/v1/kpi/meta (Phase 3)
   await registerKpiRoutes(server, config);
+
+  // Upload route: POST /api/v1/upload (Phase 4 — UP-07, IN-02)
+  await registerUploadRoutes(server, config);
 
   // ─── Global error handler ─────────────────────────────────────────────────
   server.setErrorHandler((error: Error & { statusCode?: number }, _request, reply) => {
