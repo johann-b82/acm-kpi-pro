@@ -65,7 +65,7 @@
 - [x] **WAT-03**: Detected files are enqueued to the same Bull job the upload path uses.
 - [x] **WAT-04**: After successful ingestion, the file is moved to a `processed/` subfolder (dated) to avoid re-ingestion.
 - [x] **WAT-05**: After failed ingestion, the file is moved to a `failed/` subfolder with an adjacent `.error` log file.
-- [ ] **WAT-06**: The `/healthz` endpoint reports the last ingestion timestamp and status so monitoring tools and the dashboard banner can surface stale data.
+- [x] **WAT-06**: The `/healthz` endpoint reports the last ingestion timestamp and status so monitoring tools and the dashboard banner can surface stale data.
 - [x] **WAT-07**: Watcher configuration (share path, poll interval, file pattern) is read from environment variables or a config file.
 
 ### Authentication & Authorization (AUTH)
@@ -233,7 +233,7 @@
 | WAT-03 | Phase 5 | Complete |
 | WAT-04 | Phase 5 | Complete |
 | WAT-05 | Phase 5 | Complete |
-| WAT-06 | Phase 5 | Pending |
+| WAT-06 | Phase 5 | Complete |
 | WAT-07 | Phase 5 | Complete |
 | AUTH-01 | Phase 1 | Complete (01-05) |
 | AUTH-02 | Phase 1 | Complete (01-05) |

@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 05
-last_updated: "2026-04-09T15:08:55.586Z"
+last_updated: "2026-04-09T15:13:52.735Z"
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 11
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -143,6 +143,9 @@ From `.planning/config.json`:
 - [Phase 05]: D-01 honored: ingestLagBesFile called in-process — no Bull/Redis
 - [Phase 05]: D-03 honored: ignoreInitial:false explicit for startup catch-up
 - [Phase 05]: matchesPattern() uses prefix/suffix split — avoids CJS picomatch interop in ESM workspace
+- [Phase 05]: Dynamic import of db inside onReady hook keeps module-load side effects isolated from test environments
+- [Phase 05]: Module-level _watcher handle (FSWatcher|null) acceptable for single-process production; tests mock watcher via vi.mock
+- [Phase 05]: smb_share docker volume uses driver:local as dev stub; CIFS production override documented in YAML comment for ops
 
 ## Performance Metrics
 
@@ -172,3 +175,4 @@ From `.planning/config.json`:
 | Phase 04-upload-page P04 | 5 | 2 tasks | 5 files |
 | Phase 04-upload-page P05 | 15 | 2 tasks | 4 files |
 | Phase 05-smb-folder-watcher P01 | 417 | 2 tasks | 11 files |
+| Phase 05-smb-folder-watcher P03 | 163 | 2 tasks | 3 files |
