@@ -18,9 +18,9 @@ export class LDAPService implements AuthProvider {
       // Referral following (PITFALL #5) must be handled at the application level
       // if encountered. The underlying ldapts library handles basic LDAP referrals
       // transparently for most AD deployments.
-      tlsOptions: this.config.LDAP_TLS
-        ? { rejectUnauthorized: !this.config.LDAP_SKIP_CERT_CHECK }
-        : undefined,
+      ...(this.config.LDAP_TLS && {
+        tlsOptions: { rejectUnauthorized: !this.config.LDAP_SKIP_CERT_CHECK },
+      }),
       connectTimeout: 10_000,
       timeout: 10_000,
     });
