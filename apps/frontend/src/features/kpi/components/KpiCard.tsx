@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { KpiColor } from "@acm-kpi/core";
 import { kpiColorToClasses, kpiColorToLabel } from "../../../lib/kpiColors.js";
+import { formatNumber } from "../../../lib/format.js";
 
 interface KpiCardProps {
   title: string;
@@ -38,7 +39,7 @@ export function KpiCard({ title, value, unit, color, tooltip, icon }: KpiCardPro
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">
-          {typeof value === "number" ? value.toLocaleString() : value}
+          {typeof value === "number" ? formatNumber(value) : value}
         </div>
         {unit && (
           <p className="text-xs text-muted-foreground">{unit}</p>

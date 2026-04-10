@@ -1,4 +1,6 @@
 import type { KpiSummary } from "@acm-kpi/core";
+import { useTranslation } from "react-i18next";
+import { formatCurrency } from "../../../lib/format.js";
 import { KpiCard } from "./KpiCard.js";
 
 interface KpiGridProps {
@@ -19,8 +21,11 @@ interface KpiGridProps {
  *
  * Layout: 3-col on desktop, 2-col on tablet, 1-col on mobile.
  * Pitfall #8: lean default view — all 7 cards above the fold on desktop.
+ * Phase 6: localized titles via i18n (D-18), currency via formatCurrency (D-19).
  */
 export function KpiGrid({ summary }: KpiGridProps) {
+  const { t } = useTranslation();
+
   const {
     total_inventory_value,
     days_on_hand,
@@ -42,16 +47,16 @@ export function KpiGrid({ summary }: KpiGridProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {/* 1. Total Inventory Value */}
       <KpiCard
-        title="Total Inventory Value"
-        value={`€${total_inventory_value.value_eur.toLocaleString()}`}
+        title={t("dashboard.kpiLabels.inventoryValue")}
+        value={formatCurrency(total_inventory_value.value_eur)}
         color={total_inventory_value.color}
         tooltip="Sum of wert_mit_abw for all non-deleted stock rows"
       />
 
       {/* 2. Days on Hand */}
       <KpiCard
-        title="Days on Hand"
-        value={days_on_hand.days.toLocaleString()}
+        title={t("dashboard.kpiLabels.coverage")}
+        value={days_on_hand.days}
         unit="days (weighted avg)"
         color={days_on_hand.color}
         tooltip="Weighted average coverage in days (reichw_mon × 30, weighted by value)"
@@ -59,7 +64,7 @@ export function KpiGrid({ summary }: KpiGridProps) {
 
       {/* 3. Dead Stock */}
       <KpiCard
-        title="Dead Stock"
+        title={t("dashboard.kpiLabels.slowMovers")}
         value={`${deadPct.toFixed(1)}%`}
         unit="of total inventory value"
         color={slow_dead_stock.color}
@@ -68,8 +73,8 @@ export function KpiGrid({ summary }: KpiGridProps) {
 
       {/* 4. Stockouts */}
       <KpiCard
-        title="Stockouts / Low Stock"
-        value={stockouts.count.toLocaleString()}
+        title={t("dashboard.kpiLabels.stockouts")}
+        value={stockouts.count}
         unit="items"
         color={stockouts.color}
         tooltip="Articles with stock ≤ 0 or less than 1 month coverage"
@@ -77,7 +82,7 @@ export function KpiGrid({ summary }: KpiGridProps) {
 
       {/* 5. ABC Distribution */}
       <KpiCard
-        title="ABC Distribution"
+        title={t("dashboard.kpiLabels.abcDistribution")}
         value={abcValue}
         unit="by count"
         color="neutral"
@@ -86,7 +91,7 @@ export function KpiGrid({ summary }: KpiGridProps) {
 
       {/* 6. Inventory Turnover */}
       <KpiCard
-        title="Inventory Turnover"
+        title={t("dashboard.kpiLabels.turnover")}
         value={`${inventory_turnover.ratio.toFixed(1)}×`}
         unit="times/year (proxy)"
         color={inventory_turnover.color}
@@ -95,8 +100,8 @@ export function KpiGrid({ summary }: KpiGridProps) {
 
       {/* 7. Devaluation */}
       <KpiCard
-        title="Devaluation"
-        value={`€${devaluation.total_eur.toLocaleString()}`}
+        title={t("dashboard.kpiLabels.devaluation")}
+        value={formatCurrency(devaluation.total_eur)}
         unit={`${devaluation.pct_of_value.toFixed(1)}% of value`}
         color={devaluation.color}
         tooltip="Total write-down amount (wert − wert_mit_abw)"

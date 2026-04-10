@@ -2,6 +2,7 @@ import type { UploadSuccessResponse } from "@acm-kpi/core";
 import { ArrowDown, ArrowUp, CheckCircle2, Minus } from "lucide-react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,22 +23,16 @@ type KpiKey = keyof UploadSuccessResponse["kpiDelta"];
 
 interface KpiDef {
   key: KpiKey;
-  label: string;
   unit: string;
   /** Inverted KPIs are "lower is better" — e.g. dead stock %. */
   invertedSign: boolean;
 }
 
 const KPI_DEFS: readonly KpiDef[] = [
-  {
-    key: "totalInventoryValue",
-    label: "Total Inventory Value",
-    unit: "€",
-    invertedSign: false,
-  },
-  { key: "daysOnHand", label: "Days on Hand", unit: "d", invertedSign: false },
-  { key: "stockoutsCount", label: "Stockouts", unit: "", invertedSign: false },
-  { key: "deadStockPct", label: "Dead Stock %", unit: "%", invertedSign: true },
+  { key: "totalInventoryValue", unit: "€", invertedSign: false },
+  { key: "daysOnHand", unit: "d", invertedSign: false },
+  { key: "stockoutsCount", unit: "", invertedSign: false },
+  { key: "deadStockPct", unit: "%", invertedSign: true },
 ] as const;
 
 interface DeltaSign {
@@ -99,6 +94,17 @@ function formatSignedValue(value: number, unit: string): string {
  */
 export function SuccessSummary({ result, onReset }: SuccessSummaryProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  /** Map KPI key to localized label using explicit typed t() calls. */
+  function kpiLabel(key: KpiKey): string {
+    switch (key) {
+      case "totalInventoryValue": return t("dashboard.kpiLabels.inventoryValue");
+      case "daysOnHand": return t("dashboard.kpiLabels.coverage");
+      case "stockoutsCount": return t("dashboard.kpiLabels.stockouts");
+      case "deadStockPct": return t("dashboard.kpiLabels.slowMovers");
+    }
+  }
 
   const showBeforeCol = Object.values(result.kpiDelta).some(
     (f) => f.before !== null,
@@ -119,10 +125,10 @@ export function SuccessSummary({ result, onReset }: SuccessSummaryProps) {
             className="h-5 w-5 text-green-600"
             aria-hidden="true"
           />
-          <CardTitle className="text-lg">Import successful</CardTitle>
+          <CardTitle className="text-lg">{t("upload.success")}</CardTitle>
         </div>
         <p className="text-sm text-muted-foreground">
-          {result.filename} · {result.rowsInserted} rows imported · completed
+          {result.filename} · {t("upload.rowsImported", { count: result.rowsInserted })} · completed
           in {(result.durationMs / 1000).toFixed(1)}s
         </p>
       </CardHeader>
@@ -147,7 +153,7 @@ export function SuccessSummary({ result, onReset }: SuccessSummaryProps) {
                 key={kpi.key}
                 className={cn("grid items-center gap-2 text-sm", gridCols)}
               >
-                <div className="font-medium">{kpi.label}</div>
+                <div className="font-medium">{kpiLabel(kpi.key)}</div>
                 {showBeforeCol && (
                   <div className="text-muted-foreground">
                     {field.before === null
@@ -161,7 +167,7 @@ export function SuccessSummary({ result, onReset }: SuccessSummaryProps) {
                 <div
                   className={cn("flex items-center gap-1", sign.color)}
                   data-testid={`delta-${kpi.key}`}
-                  aria-label={`${kpi.label} ${sign.label}`}
+                  aria-label={`${kpiLabel(kpi.key)} ${sign.label}`}
                 >
                   <span>
                     {field.delta === 0
@@ -176,9 +182,9 @@ export function SuccessSummary({ result, onReset }: SuccessSummaryProps) {
         </div>
 
         <div className="flex gap-3">
-          <Button onClick={handleGoToDashboard}>Go to Dashboard</Button>
+          <Button onClick={handleGoToDashboard}>{t("dashboard.title")}</Button>
           <Button variant="outline" onClick={onReset}>
-            Upload another file
+            {t("upload.button")}
           </Button>
         </div>
       </CardContent>

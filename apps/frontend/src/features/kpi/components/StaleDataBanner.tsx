@@ -1,4 +1,5 @@
 import { AlertTriangle, AlertCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { StalenessLevel } from "../hooks/useStalenessAlert.js";
 
 interface StaleDataBannerProps {
@@ -15,8 +16,11 @@ interface StaleDataBannerProps {
  *
  * Addresses Pitfall #6 (freshness ambiguity) from PITFALLS.md.
  * DASH-03: stale data indicator.
+ * Phase 6: localized via i18n (D-18).
  */
 export function StaleDataBanner({ level }: StaleDataBannerProps) {
+  const { t } = useTranslation();
+
   if (level === "none") return null;
 
   const isCritical = level === "critical";
@@ -36,9 +40,7 @@ export function StaleDataBanner({ level }: StaleDataBannerProps) {
         <AlertTriangle className="h-5 w-5 shrink-0" aria-hidden="true" />
       )}
       <span className="text-sm font-medium">
-        {isCritical
-          ? "Data is older than 2 hours. Please refresh to get the latest information."
-          : "Data is over 30 minutes old. For the latest figures, refresh now."}
+        {isCritical ? t("dashboard.stale2h") : t("dashboard.stale30min")}
       </span>
     </div>
   );

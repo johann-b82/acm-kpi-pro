@@ -1,6 +1,7 @@
 import type { UploadErrorResponse } from "@acm-kpi/core";
 import { AlertCircle } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +38,7 @@ interface FieldGroup {
  * values for pasting into spreadsheets / IT tickets.
  */
 export function ErrorSummary({ result, onReset }: ErrorSummaryProps) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
   const fieldGroups = useMemo<FieldGroup[]>(() => {
@@ -75,7 +77,7 @@ export function ErrorSummary({ result, onReset }: ErrorSummaryProps) {
       <CardHeader>
         <div className="flex items-center gap-2">
           <AlertCircle className="h-5 w-5 text-red-600" aria-hidden="true" />
-          <CardTitle className="text-lg">Import failed</CardTitle>
+          <CardTitle className="text-lg">{t("upload.errors.validationErrors")}</CardTitle>
         </div>
         <p className="text-sm text-muted-foreground">
           {errorCount} errors across {fieldCount} fields:
@@ -124,10 +126,10 @@ export function ErrorSummary({ result, onReset }: ErrorSummaryProps) {
 
         <div className="flex gap-3">
           <Button variant="outline" onClick={() => void handleCopyErrors()}>
-            {copied ? "Copied!" : "Copy all errors"}
+            {copied ? t("common.save") : t("common.retry")}
           </Button>
           <Button variant="outline" onClick={onReset}>
-            Try another file
+            {t("upload.button")}
           </Button>
         </div>
       </CardContent>

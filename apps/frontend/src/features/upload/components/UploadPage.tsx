@@ -3,6 +3,7 @@ import type {
   UploadSuccessResponse,
 } from "@acm-kpi/core";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Header } from "@/components/Header";
 import {
   Card,
@@ -26,6 +27,7 @@ import { SuccessSummary } from "./SuccessSummary.js";
  *   rendered below it based on the current XHR state machine state.
  */
 export function UploadPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { state, uploadPercent, result, error, uploadFile, reset } =
     useUpload();
@@ -57,7 +59,7 @@ export function UploadPage() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="mx-auto max-w-2xl space-y-6 px-4 py-8">
-        <h1 className="text-2xl font-bold">Upload Data</h1>
+        <h1 className="text-2xl font-bold">{t("upload.title")}</h1>
 
         {showDropZone && (
           <DropZone
@@ -93,12 +95,12 @@ export function UploadPage() {
           <Card className="border-2 border-red-200" aria-live="assertive">
             <CardHeader>
               <CardTitle className="text-lg text-red-600">
-                Upload failed
+                {t("common.error")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-destructive">
-                {error ?? "An unknown error occurred."}
+                {error ?? t("upload.errors.networkError")}
               </p>
             </CardContent>
           </Card>

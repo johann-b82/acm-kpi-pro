@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ArticleSummary } from "@acm-kpi/core";
+import { useTranslation } from "react-i18next";
+import { formatCurrency, formatNumber } from "../../../lib/format.js";
 
 interface StockoutListProps {
   items: ArticleSummary[];
@@ -22,15 +24,16 @@ interface StockoutListProps {
  * DASH-07: stockout drill-down.
  */
 export function StockoutList({ items, onRowClick }: StockoutListProps) {
+  const { t } = useTranslation();
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Stockouts &amp; Low Stock</CardTitle>
+        <CardTitle>{t("dashboard.kpiLabels.stockouts")}</CardTitle>
       </CardHeader>
       <CardContent>
         {items.length === 0 ? (
           <p className="py-6 text-center text-sm text-muted-foreground">
-            No stockouts — all articles have sufficient coverage.
+            {t("dashboard.emptyState.body")}
           </p>
         ) : (
           <Table>
@@ -62,10 +65,10 @@ export function StockoutList({ items, onRowClick }: StockoutListProps) {
                   <TableCell className="font-mono text-sm">{item.artikelnr}</TableCell>
                   <TableCell>{item.bezeichnung_1 ?? "—"}</TableCell>
                   <TableCell className="text-right">
-                    {item.bestand_basiseinheit.toLocaleString()}
+                    {formatNumber(item.bestand_basiseinheit)}
                   </TableCell>
                   <TableCell className="text-right">
-                    €{item.wert_mit_abw.toLocaleString()}
+                    {formatCurrency(item.wert_mit_abw)}
                   </TableCell>
                   <TableCell className="text-center font-semibold">
                     {item.abc_kennz_vk}

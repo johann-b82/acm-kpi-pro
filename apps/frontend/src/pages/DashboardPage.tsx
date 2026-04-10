@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Header } from "../components/Header.js";
 import { useKpiSummary } from "../features/kpi/hooks/useKpiSummary.js";
 import { useStalenessAlert } from "../features/kpi/hooks/useStalenessAlert.js";
@@ -28,6 +29,7 @@ import type { ArticleSummary, ArticleFilterQuery } from "@acm-kpi/core";
  * Requirements: DASH-01, DASH-03, DASH-04, DASH-05, DASH-06, DASH-07, DASH-08, DASH-11
  */
 export function DashboardPage() {
+  const { t } = useTranslation();
   const { data: summary, isLoading, isError, refetch, isFetching } = useKpiSummary();
   const stalenessLevel = useStalenessAlert(summary?.last_updated_at ?? null);
   const { data: meta } = useKpiMeta();
@@ -82,16 +84,16 @@ export function DashboardPage() {
         <Header />
         <main className="mx-auto max-w-screen-xl px-4 py-8">
           <div className="rounded-md border border-red-200 bg-red-50 p-6 text-red-900">
-            <p className="font-semibold">Failed to load KPI data</p>
+            <p className="font-semibold">{t("common.error")}</p>
             <p className="mt-1 text-sm">
-              Check your network connection or contact your administrator.
+              {t("auth.networkError")}
             </p>
             <button
               onClick={handleForceRefresh}
               className="mt-3 text-sm underline hover:no-underline"
               type="button"
             >
-              Try again
+              {t("common.retry")}
             </button>
           </div>
         </main>

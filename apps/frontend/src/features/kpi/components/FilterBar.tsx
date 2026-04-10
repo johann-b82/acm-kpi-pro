@@ -6,6 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { KpiMeta, ArticleFilterQuery, ArticleType, AbcClass } from "@acm-kpi/core";
+import { useTranslation } from "react-i18next";
 
 interface FilterBarProps {
   meta: KpiMeta | undefined;
@@ -25,9 +26,11 @@ const ALL_VALUE = "__all__";
  * Each has an "All" option (resolves to undefined).
  *
  * DASH-05: filter scaffolding present; actual filtered data wired in v1.x.
- * Phase 6 will add i18n; labels are English in Phase 3.
+ * Phase 6: all strings localized via i18n (D-18).
  */
 export function FilterBar({ meta, warehouse, wgr, abc, typ, onChange }: FilterBarProps) {
+  const { t } = useTranslation();
+
   const handleWarehouse = (val: string) => {
     const updates: Partial<ArticleFilterQuery> = {};
     if (val !== ALL_VALUE) updates.warehouse = val;
@@ -52,15 +55,17 @@ export function FilterBar({ meta, warehouse, wgr, abc, typ, onChange }: FilterBa
     onChange(updates);
   };
 
+  const allLabel = t("dashboard.filters.all");
+
   return (
     <div className="flex flex-wrap gap-3" role="search" aria-label="Dashboard filters">
       {/* Warehouse filter */}
       <Select value={warehouse ?? ALL_VALUE} onValueChange={handleWarehouse}>
-        <SelectTrigger className="w-48" aria-label="Filter by warehouse">
-          <SelectValue placeholder="All Warehouses" />
+        <SelectTrigger className="w-48" aria-label={t("dashboard.filters.warehouse")}>
+          <SelectValue placeholder={`${allLabel} ${t("dashboard.filters.warehouse")}`} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL_VALUE}>All Warehouses</SelectItem>
+          <SelectItem value={ALL_VALUE}>{`${allLabel} ${t("dashboard.filters.warehouse")}`}</SelectItem>
           {(meta?.warehouses ?? []).map((w) => (
             <SelectItem key={w} value={w}>
               {w}
@@ -71,11 +76,11 @@ export function FilterBar({ meta, warehouse, wgr, abc, typ, onChange }: FilterBa
 
       {/* Product group filter */}
       <Select value={wgr ?? ALL_VALUE} onValueChange={handleWgr}>
-        <SelectTrigger className="w-48" aria-label="Filter by product group">
-          <SelectValue placeholder="All Product Groups" />
+        <SelectTrigger className="w-48" aria-label={t("dashboard.filters.productGroup")}>
+          <SelectValue placeholder={`${allLabel} ${t("dashboard.filters.productGroup")}`} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL_VALUE}>All Product Groups</SelectItem>
+          <SelectItem value={ALL_VALUE}>{`${allLabel} ${t("dashboard.filters.productGroup")}`}</SelectItem>
           {(meta?.product_groups ?? []).map((g) => (
             <SelectItem key={g} value={g}>
               {g}
@@ -86,28 +91,28 @@ export function FilterBar({ meta, warehouse, wgr, abc, typ, onChange }: FilterBa
 
       {/* ABC class filter */}
       <Select value={abc ?? ALL_VALUE} onValueChange={handleAbc}>
-        <SelectTrigger className="w-36" aria-label="Filter by ABC class">
-          <SelectValue placeholder="All ABC" />
+        <SelectTrigger className="w-36" aria-label={t("dashboard.filters.abcClass")}>
+          <SelectValue placeholder={`${allLabel} ABC`} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL_VALUE}>All ABC</SelectItem>
-          <SelectItem value="A">A — High value</SelectItem>
-          <SelectItem value="B">B — Medium value</SelectItem>
-          <SelectItem value="C">C — Low value</SelectItem>
+          <SelectItem value={ALL_VALUE}>{`${allLabel} ABC`}</SelectItem>
+          <SelectItem value="A">A</SelectItem>
+          <SelectItem value="B">B</SelectItem>
+          <SelectItem value="C">C</SelectItem>
         </SelectContent>
       </Select>
 
       {/* Article type filter */}
       <Select value={typ ?? ALL_VALUE} onValueChange={handleTyp}>
-        <SelectTrigger className="w-40" aria-label="Filter by article type">
-          <SelectValue placeholder="All Types" />
+        <SelectTrigger className="w-40" aria-label={t("dashboard.filters.articleType")}>
+          <SelectValue placeholder={`${allLabel} ${t("dashboard.filters.articleType")}`} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL_VALUE}>All Types</SelectItem>
-          <SelectItem value="ART">ART — Article</SelectItem>
-          <SelectItem value="MAT">MAT — Material</SelectItem>
-          <SelectItem value="HLB">HLB — Semi-finished</SelectItem>
-          <SelectItem value="WKZ">WKZ — Tool/Sample</SelectItem>
+          <SelectItem value={ALL_VALUE}>{`${allLabel} ${t("dashboard.filters.articleType")}`}</SelectItem>
+          <SelectItem value="ART">ART</SelectItem>
+          <SelectItem value="MAT">MAT</SelectItem>
+          <SelectItem value="HLB">HLB</SelectItem>
+          <SelectItem value="WKZ">WKZ</SelectItem>
         </SelectContent>
       </Select>
     </div>

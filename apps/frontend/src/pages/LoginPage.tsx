@@ -1,14 +1,18 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 /**
  * Login page — LDAP credentials form.
  * Submits to POST /api/v1/auth/login.
  * On success, navigates to dashboard.
  * (AUTH-06)
+ *
+ * Phase 6: all strings localized via i18n (D-18).
  */
 export function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,10 +37,10 @@ export function LoginPage() {
         void navigate("/", { replace: true });
       } else {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        setError(body.error ?? "Login failed. Check your credentials.");
+        setError(body.error ?? t("auth.loginFailed"));
       }
     } catch {
-      setError("Network error. Please try again.");
+      setError(t("auth.networkError"));
     } finally {
       setLoading(false);
     }
@@ -48,15 +52,15 @@ export function LoginPage() {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-2">
           <img src="/acm-logo.svg" alt="ACM logo" width={56} height={56} className="h-14 w-14" />
-          <h1 className="text-2xl font-bold text-foreground">ACM KPI Pro</h1>
-          <p className="text-sm text-muted-foreground">Sign in with your ACM account</p>
+          <h1 className="text-2xl font-bold text-foreground">{t("common.appName")}</h1>
+          <p className="text-sm text-muted-foreground">{t("auth.signInWith")}</p>
         </div>
 
         {/* Form */}
         <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">
-              Username
+              {t("auth.username")}
             </label>
             <input
               id="username"
@@ -67,13 +71,13 @@ export function LoginPage() {
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                          text-foreground placeholder:text-muted-foreground
                          focus:outline-none focus:ring-2 focus:ring-ring"
-              placeholder="firstname.lastname"
+              placeholder={t("auth.usernameHint")}
             />
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">
-              Password
+              {t("auth.password")}
             </label>
             <input
               id="password"
@@ -100,7 +104,7 @@ export function LoginPage() {
                        text-primary-foreground hover:bg-primary/90 disabled:opacity-50
                        transition-colors"
           >
-            {loading ? "Signing in…" : "Sign in"}
+            {loading ? t("auth.signingIn") : t("auth.signIn")}
           </button>
         </form>
       </div>

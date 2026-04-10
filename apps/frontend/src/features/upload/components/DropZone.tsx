@@ -6,15 +6,11 @@ import {
   useRef,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import type { DropZoneProps } from "../types.js";
 
 const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
-
-const ERR_EXTENSION =
-  "Only .csv and .txt files are accepted. Apollo NTS exports use .txt by default.";
-const ERR_SIZE =
-  "File too large — maximum 10 MB. Apollo exports should be well under this.";
 
 /**
  * Drop zone for CSV/TXT upload (D-02, UI-SPEC §"Drop Zone Interaction").
@@ -30,6 +26,7 @@ export function DropZone({
   disabled = false,
   error = null,
 }: DropZoneProps) {
+  const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -38,11 +35,11 @@ export function DropZone({
   const validateFile = (file: File): boolean => {
     const ext = file.name.split(".").pop()?.toLowerCase();
     if (ext !== "csv" && ext !== "txt") {
-      setLocalError(ERR_EXTENSION);
+      setLocalError(t("upload.errors.unsupportedFormat"));
       return false;
     }
     if (file.size > MAX_SIZE_BYTES) {
-      setLocalError(ERR_SIZE);
+      setLocalError(t("upload.errors.fileTooLarge"));
       return false;
     }
     setLocalError(null);
@@ -54,7 +51,7 @@ export function DropZone({
 
     if (files.length > 1) {
       const first = files[0] as File;
-      setMultiWarning(`Only one file at a time — using ${first.name}.`);
+      setMultiWarning(`${first.name}`);
       if (validateFile(first)) {
         onFileSelected(first);
       }
@@ -128,7 +125,7 @@ export function DropZone({
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         disabled={disabled}
-        aria-label="File upload area. Drop your CSV or TXT file or press Enter to browse."
+        aria-label={t("upload.dragDrop")}
         className={cn(
           "flex w-full flex-col items-center gap-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500",
           disabled ? "cursor-not-allowed" : "cursor-pointer",
@@ -136,10 +133,9 @@ export function DropZone({
       >
         <Upload className="h-8 w-8 text-slate-400" aria-hidden="true" />
         <p className="text-sm font-medium text-slate-700">
-          Drop your LagBes CSV or TXT file here
+          {t("upload.dragDrop")}
         </p>
-        <span className="text-sm text-slate-500">or click to browse</span>
-        <p className="text-xs text-muted-foreground">Maximum file size: 10 MB</p>
+        <p className="text-xs text-muted-foreground">{t("upload.fileHint")}</p>
       </button>
 
       <input

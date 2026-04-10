@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import { formatCurrency, formatNumber } from "../../../lib/format.js";
 import {
   Table,
   TableBody,
@@ -103,13 +104,13 @@ export function ArticleDrilldownModal({ isOpen, onClose, article }: ArticleDrill
                 <TableRow>
                   <TableCell className="font-medium">Bestand</TableCell>
                   <TableCell>
-                    {fullArticle.bestand_basiseinheit.toLocaleString()}
+                    {formatNumber(fullArticle.bestand_basiseinheit)}
                     {fullArticle.einh ? ` ${fullArticle.einh}` : ""}
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Wert mit Abw.</TableCell>
-                  <TableCell>€{fullArticle.wert_mit_abw.toLocaleString()}</TableCell>
+                  <TableCell>{formatCurrency(fullArticle.wert_mit_abw)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Letzt. Zugang</TableCell>
@@ -155,7 +156,7 @@ export function ArticleDrilldownModal({ isOpen, onClose, article }: ArticleDrill
                           {val === null || val === undefined
                             ? "—"
                             : typeof val === "number"
-                            ? val.toLocaleString()
+                            ? formatNumber(val)
                             : String(val)}
                         </TableCell>
                       </TableRow>
