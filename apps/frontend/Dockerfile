@@ -16,13 +16,16 @@ RUN npm ci
 # Copy source
 COPY packages/core/ ./packages/core/
 COPY apps/frontend/ ./apps/frontend/
-COPY tsconfig.json ./
+# Use Docker-specific root tsconfig without workspace references that would
+# require all workspace source trees to be present in the build context.
+COPY tsconfig.docker.json ./tsconfig.json
 
 # Build core first
-RUN npm -w packages/core run build
+RUN npx tsc --build packages/core/tsconfig.json
 
 # Build frontend (outputs to apps/frontend/dist/)
-RUN npm -w apps/frontend run build
+# Run vite build directly — tsc type checking runs in CI, not in Docker.
+RUN cd apps/frontend && npx vite build 2>&1
 
 # ── Stage 2: Static files only ────────────────────────────────────────────────
 # Caddy serves from a named volume populated by the frontend-build init container.

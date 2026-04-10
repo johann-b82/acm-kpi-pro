@@ -17,13 +17,15 @@ RUN npm ci
 # Copy source code
 COPY packages/core/ ./packages/core/
 COPY apps/api/ ./apps/api/
-COPY tsconfig.json ./
+# Use Docker-specific root tsconfig without workspace references that would
+# require all workspace source trees to be present in the build context.
+COPY tsconfig.docker.json ./tsconfig.json
 
 # Build core package first (api depends on it)
-RUN npm -w packages/core run build
+RUN npx tsc --build packages/core/tsconfig.json
 
 # Build API
-RUN npm -w apps/api run build
+RUN npx tsc --build apps/api/tsconfig.json
 
 # ── Stage 2: Runtime ─────────────────────────────────────────────────────────
 FROM node:22-alpine
