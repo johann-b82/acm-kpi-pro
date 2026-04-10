@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 05
-last_updated: "2026-04-10T07:44:58.533Z"
+last_updated: "2026-04-10T07:59:23.434Z"
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 15
-  completed_plans: 10
+  completed_plans: 12
 ---
 
 # Project State
@@ -150,6 +150,9 @@ From `.planning/config.json`:
 - [Phase 05]: Test 6 (D-03 startup catch-up) proves ignoreInitial:false fires add for pre-existing files — same handler processes both new and pre-existing files with no extra code
 - [Phase 06-01]: AuthUser.username used as DB lookup key (not ldapDn) — AuthUser type has no ldapDn field
 - [Phase 06-01]: Manual migration SQL written for theme/locale columns (drizzle-kit bypassed — requires TTY)
+- [Phase 06-03]: useThemeColors uses requestAnimationFrame to read CSS variables after next-themes settles class on html
+- [Phase 06-03]: lib/format.ts reads i18n.language directly so it can be used outside React components
+- [Phase 06-03]: SuccessSummary uses switch statement instead of t(key as type) cast to satisfy typed i18next TS constraints
 
 ## Performance Metrics
 
@@ -182,3 +185,4 @@ From `.planning/config.json`:
 | Phase 05-smb-folder-watcher P03 | 163 | 2 tasks | 3 files |
 | Phase 05 P02 | 277 | 2 tasks | 5 files |
 | Phase 06-dark-light-mode-i18n P01 | 15 | 2 tasks | 7 files |
+| Phase 06-dark-light-mode-i18n P03 | 9 | 2 tasks | 17 files |

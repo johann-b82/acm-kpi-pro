@@ -44,8 +44,8 @@
 - [x] **DASH-06**: Dashboard shows a slow-mover / dead-stock chart (aging buckets).
 - [x] **DASH-07**: Dashboard shows a stockout / low-stock list with drill-down to row detail.
 - [x] **DASH-08**: First contentful paint is under 2 seconds on the target network from a cold cache.
-- [ ] **DASH-09**: All numbers displayed on the dashboard use German formatting (`1.234.567,89 €`) when the UI language is German, and English formatting otherwise.
-- [ ] **DASH-10**: Dates are displayed as `DD.MM.YYYY` in German and `YYYY-MM-DD` (or locale default) in English.
+- [x] **DASH-09**: All numbers displayed on the dashboard use German formatting (`1.234.567,89 €`) when the UI language is German, and English formatting otherwise.
+- [x] **DASH-10**: Dates are displayed as `DD.MM.YYYY` in German and `YYYY-MM-DD` (or locale default) in English.
 - [x] **DASH-11**: A refresh button lets users force a re-poll without waiting for the polling interval.
 
 ### Upload Page (UP)
@@ -84,15 +84,15 @@
 - [x] **I18N-01**: The UI supports German and English.
 - [x] **I18N-02**: Users can toggle language via a control in the app header; selection is persisted per user.
 - [ ] **I18N-03**: All user-facing strings (UI, error messages, docs) are localized; a CI check fails the build if `de.json` and `en.json` key sets diverge.
-- [ ] **I18N-04**: German layouts are verified to accommodate longer text without truncation.
-- [ ] **I18N-05**: Number, currency, and date formatting uses `Intl.NumberFormat` / `Intl.DateTimeFormat` with the appropriate locale.
+- [x] **I18N-04**: German layouts are verified to accommodate longer text without truncation.
+- [x] **I18N-05**: Number, currency, and date formatting uses `Intl.NumberFormat` / `Intl.DateTimeFormat` with the appropriate locale.
 
 ### Theme (THEME)
 
 - [x] **THEME-01**: Users can toggle between dark mode and light mode.
 - [x] **THEME-02**: Theme preference is persisted per user across sessions.
 - [ ] **THEME-03**: Both themes meet WCAG AA contrast for body text and KPI values.
-- [ ] **THEME-04**: Charts render correctly in both themes with theme-aware colors.
+- [x] **THEME-04**: Charts render correctly in both themes with theme-aware colors.
 
 ### User Documentation Site (DOCS)
 
@@ -218,8 +218,8 @@
 | DASH-06 | Phase 3 | Complete |
 | DASH-07 | Phase 3 | Complete |
 | DASH-08 | Phase 3 | Complete |
-| DASH-09 | Phase 6 | Pending |
-| DASH-10 | Phase 6 | Pending |
+| DASH-09 | Phase 6 | Complete |
+| DASH-10 | Phase 6 | Complete |
 | DASH-11 | Phase 3 | Complete |
 | UP-01 | Phase 4 | Complete |
 | UP-02 | Phase 4 | Complete |
@@ -246,12 +246,12 @@
 | I18N-01 | Phase 6 | Complete |
 | I18N-02 | Phase 6 | Complete |
 | I18N-03 | Phase 6 | Pending |
-| I18N-04 | Phase 6 | Pending |
-| I18N-05 | Phase 6 | Pending |
+| I18N-04 | Phase 6 | Complete |
+| I18N-05 | Phase 6 | Complete |
 | THEME-01 | Phase 6 | Complete |
 | THEME-02 | Phase 6 | Complete |
 | THEME-03 | Phase 6 | Pending |
-| THEME-04 | Phase 6 | Pending |
+| THEME-04 | Phase 6 | Complete |
 | DOCS-01 | Phase 7 | Pending |
 | DOCS-02 | Phase 7 | Pending |
 | DOCS-03 | Phase 7 | Pending |
