@@ -58,6 +58,9 @@ describe("i18n module", () => {
 
   it("fallback language is 'de'", async () => {
     const i18n = (await import("../i18n.js")).default;
-    expect(i18n.options.fallbackLng).toBe("de");
+    // i18next normalizes fallbackLng to an array internally
+    const fallback = i18n.options.fallbackLng;
+    const normalized = Array.isArray(fallback) ? fallback[0] : fallback;
+    expect(normalized).toBe("de");
   });
 });

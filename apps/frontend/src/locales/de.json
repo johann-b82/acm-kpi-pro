@@ -1,0 +1,73 @@
+{
+  "common": {
+    "appName": "ACM KPI Pro",
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "logout": "Abmelden",
+    "logoutConfirm": "Sie wurden abgemeldet.",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "usernameHint": "vorname.nachname",
+    "signingIn": "Anmelden...",
+    "signInWith": "Anmelden mit ACM-Konto",
+    "loginFailed": "Anmeldung fehlgeschlagen. Überprüfen Sie Ihre Zugangsdaten.",
+    "networkError": "Netzwerkfehler. Bitte erneut versuchen.",
+    "accessDenied": "Kein Zugriff. Nur Administratoren können diese Seite aufrufen."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "refresh": "KPI-Daten aktualisieren",
+    "stale30min": "Daten älter als 30 Minuten",
+    "stale2h": "Daten älter als 2 Stunden — bitte erneut hochladen",
+    "emptyState": {
+      "heading": "Noch keine Daten",
+      "body": "Laden Sie eine Datei hoch, um KPI-Daten anzuzeigen."
+    },
+    "kpiLabels": {
+      "inventoryValue": "Lagerwert",
+      "coverage": "Reichweite in Tagen",
+      "slowMovers": "Langsamdreher",
+      "stockouts": "Fehlbestände",
+      "abcDistribution": "ABC-Verteilung",
+      "turnover": "Umschlagshäufigkeit",
+      "devaluation": "Abwertung"
+    },
+    "filters": {
+      "warehouse": "Lager",
+      "productGroup": "Produktgruppe",
+      "abcClass": "ABC-Klasse",
+      "articleType": "Artikeltyp",
+      "all": "Alle"
+    }
+  },
+  "upload": {
+    "title": "Daten hochladen",
+    "button": "Hochladen",
+    "dragDrop": "Datei hierher ziehen oder klicken zum Auswählen",
+    "fileHint": "Nur .csv und .txt Dateien",
+    "uploading": "Wird hochgeladen...",
+    "processing": "Wird verarbeitet...",
+    "success": "Erfolgreich importiert",
+    "rowsImported": "{{count}} Zeilen importiert",
+    "errors": {
+      "fileTooLarge": "Datei überschreitet maximale Größe (10 MB)",
+      "unsupportedFormat": "Nur .csv und .txt Dateien werden akzeptiert",
+      "networkError": "Hochladen fehlgeschlagen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+      "validationErrors": "Validierungsfehler gefunden"
+    }
+  },
+  "theme": {
+    "switchToDark": "Zum dunklen Modus wechseln",
+    "switchToLight": "Zum hellen Modus wechseln",
+    "switchToGerman": "Zu Deutsch wechseln",
+    "switchToEnglish": "Zu Englisch wechseln"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "common": {
+    "appName": "ACM KPI Pro",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "logout": "Logout",
+    "logoutConfirm": "You have been logged out.",
+    "username": "Username",
+    "password": "Password",
+    "usernameHint": "firstname.lastname",
+    "signingIn": "Signing in...",
+    "signInWith": "Sign in with your ACM account",
+    "loginFailed": "Login failed. Check your credentials.",
+    "networkError": "Network error. Please try again.",
+    "accessDenied": "Access denied. Only Admins can access this page."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "lastUpdated": "Last updated",
+    "refresh": "Refresh KPI data",
+    "stale30min": "Data is older than 30 minutes",
+    "stale2h": "Data is older than 2 hours — please upload again",
+    "emptyState": {
+      "heading": "No data yet",
+      "body": "Upload a file to see KPI data."
+    },
+    "kpiLabels": {
+      "inventoryValue": "Inventory Value",
+      "coverage": "Days on Hand",
+      "slowMovers": "Slow Movers",
+      "stockouts": "Stockouts",
+      "abcDistribution": "ABC Distribution",
+      "turnover": "Inventory Turnover",
+      "devaluation": "Devaluation"
+    },
+    "filters": {
+      "warehouse": "Warehouse",
+      "productGroup": "Product Group",
+      "abcClass": "ABC Class",
+      "articleType": "Article Type",
+      "all": "All"
+    }
+  },
+  "upload": {
+    "title": "Upload Data",
+    "button": "Upload",
+    "dragDrop": "Drag and drop a file or click to select",
+    "fileHint": ".csv and .txt files only",
+    "uploading": "Uploading...",
+    "processing": "Processing...",
+    "success": "Successfully imported",
+    "rowsImported": "{{count}} rows imported",
+    "errors": {
+      "fileTooLarge": "File exceeds maximum size (10 MB)",
+      "unsupportedFormat": "Only .csv and .txt files are accepted",
+      "networkError": "Failed to upload. Please check your connection and try again.",
+      "validationErrors": "Validation errors found"
+    }
+  },
+  "theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode",
+    "switchToGerman": "Switch to German",
+    "switchToEnglish": "Switch to English"
+  }
+}
