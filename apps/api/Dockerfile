@@ -4,9 +4,12 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Copy workspace manifests first (layer cache optimization)
+# All workspace package.json files must be present for npm ci to resolve the workspace graph.
 COPY package.json package-lock.json ./
 COPY packages/core/package.json ./packages/core/
 COPY apps/api/package.json ./apps/api/
+COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/worker/package.json ./apps/worker/
 
 # Install all dependencies (includes devDependencies for build)
 RUN npm ci
@@ -27,22 +30,18 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Create non-root user (PITFALL #9: explicit UID for volume permission alignment)
-# UID 1000 is conventional for the first non-root user on Linux hosts.
-RUN addgroup -g 1000 appuser && \
-    adduser -u 1000 -G appuser -s /sbin/nologin -D appuser
-
+# Use the built-in 'node' user (UID/GID 1000) provided by the node:alpine image.
 # Copy built output + production node_modules from builder
-COPY --from=builder --chown=appuser:appuser /app/node_modules ./node_modules
-COPY --from=builder --chown=appuser:appuser /app/apps/api/dist ./dist
-COPY --from=builder --chown=appuser:appuser /app/apps/api/package.json ./
-COPY --from=builder --chown=appuser:appuser /app/apps/api/drizzle ./drizzle
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules
+COPY --from=builder --chown=node:node /app/apps/api/dist ./dist
+COPY --from=builder --chown=node:node /app/apps/api/package.json ./
+COPY --from=builder --chown=node:node /app/apps/api/drizzle ./drizzle
 
 # Copy entrypoint script
-COPY --chown=appuser:appuser apps/api/entrypoint.sh ./entrypoint.sh
+COPY --chown=node:node apps/api/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
-USER appuser
+USER node
 
 EXPOSE 3000
 

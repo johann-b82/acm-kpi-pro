@@ -4,9 +4,12 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Copy workspace manifests
+# All workspace package.json files must be present for npm ci to resolve the workspace graph.
 COPY package.json package-lock.json ./
 COPY packages/core/package.json ./packages/core/
+COPY apps/api/package.json ./apps/api/
 COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/worker/package.json ./apps/worker/
 
 RUN npm ci
 
