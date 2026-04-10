@@ -1,6 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import type { AppConfig } from "../config.js";
+import { db } from "../db/index.js";
+import { users } from "../db/schema.js";
+import { eq } from "drizzle-orm";
 import type { LDAPService } from "../services/ldap.service.js";
 import { getSession } from "../session.js";
 
@@ -68,10 +71,21 @@ export async function registerAuthRoutes(
       reply.code(401).send({ error: "Not authenticated" });
       return;
     }
+
+    const dbUser = await db
+      .select({ theme: users.theme, locale: users.locale })
+      .from(users)
+      .where(eq(users.username, session.user.username))
+      .limit(1);
+
+    const prefs = dbUser[0] ?? { theme: "system", locale: "de" };
+
     reply.send({
       username: session.user.username,
       role: session.user.role,
       loginAt: session.user.loginAt,
+      theme: prefs.theme,
+      locale: prefs.locale,
     });
   });
 }
