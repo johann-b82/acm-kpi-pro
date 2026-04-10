@@ -21,7 +21,7 @@ COPY apps/frontend/ ./apps/frontend/
 COPY tsconfig.docker.json ./tsconfig.json
 
 # Build core first
-RUN npx tsc --build packages/core/tsconfig.json
+RUN cd packages/core && npx tsc --build 2>&1 || (echo "--- CORE BUILD FAILED ---" && exit 1)
 
 # Verify core was built
 RUN ls -la packages/core/dist/
