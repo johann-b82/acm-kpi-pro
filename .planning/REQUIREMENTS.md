@@ -81,16 +81,16 @@
 
 ### Internationalization (I18N)
 
-- [ ] **I18N-01**: The UI supports German and English.
-- [ ] **I18N-02**: Users can toggle language via a control in the app header; selection is persisted per user.
+- [x] **I18N-01**: The UI supports German and English.
+- [x] **I18N-02**: Users can toggle language via a control in the app header; selection is persisted per user.
 - [ ] **I18N-03**: All user-facing strings (UI, error messages, docs) are localized; a CI check fails the build if `de.json` and `en.json` key sets diverge.
 - [ ] **I18N-04**: German layouts are verified to accommodate longer text without truncation.
 - [ ] **I18N-05**: Number, currency, and date formatting uses `Intl.NumberFormat` / `Intl.DateTimeFormat` with the appropriate locale.
 
 ### Theme (THEME)
 
-- [ ] **THEME-01**: Users can toggle between dark mode and light mode.
-- [ ] **THEME-02**: Theme preference is persisted per user across sessions.
+- [x] **THEME-01**: Users can toggle between dark mode and light mode.
+- [x] **THEME-02**: Theme preference is persisted per user across sessions.
 - [ ] **THEME-03**: Both themes meet WCAG AA contrast for body text and KPI values.
 - [ ] **THEME-04**: Charts render correctly in both themes with theme-aware colors.
 
@@ -243,13 +243,13 @@
 | AUTH-06 | Phase 1 | Complete (01-05) |
 | AUTH-07 | Phase 1 | Complete (01-05) |
 | AUTH-08 | Phase 1 | Complete (01-05) |
-| I18N-01 | Phase 6 | Pending |
-| I18N-02 | Phase 6 | Pending |
+| I18N-01 | Phase 6 | Complete |
+| I18N-02 | Phase 6 | Complete |
 | I18N-03 | Phase 6 | Pending |
 | I18N-04 | Phase 6 | Pending |
 | I18N-05 | Phase 6 | Pending |
-| THEME-01 | Phase 6 | Pending |
-| THEME-02 | Phase 6 | Pending |
+| THEME-01 | Phase 6 | Complete |
+| THEME-02 | Phase 6 | Complete |
 | THEME-03 | Phase 6 | Pending |
 | THEME-04 | Phase 6 | Pending |
 | DOCS-01 | Phase 7 | Pending |

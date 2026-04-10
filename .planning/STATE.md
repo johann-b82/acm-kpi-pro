@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 05
-last_updated: "2026-04-09T15:16:10.396Z"
+last_updated: "2026-04-10T07:44:58.533Z"
 progress:
   total_phases: 8
   completed_phases: 3
-  total_plans: 11
-  completed_plans: 9
+  total_plans: 15
+  completed_plans: 10
 ---
 
 # Project State
@@ -148,6 +148,8 @@ From `.planning/config.json`:
 - [Phase 05]: smb_share docker volume uses driver:local as dev stub; CIFS production override documented in YAML comment for ops
 - [Phase 05]: WatcherErrorLog defined in both path-resolver.ts and packages/core/src/ingest/error.ts to avoid circular dep; @acm-kpi/core is canonical export
 - [Phase 05]: Test 6 (D-03 startup catch-up) proves ignoreInitial:false fires add for pre-existing files — same handler processes both new and pre-existing files with no extra code
+- [Phase 06-01]: AuthUser.username used as DB lookup key (not ldapDn) — AuthUser type has no ldapDn field
+- [Phase 06-01]: Manual migration SQL written for theme/locale columns (drizzle-kit bypassed — requires TTY)
 
 ## Performance Metrics
 
@@ -179,3 +181,4 @@ From `.planning/config.json`:
 | Phase 05-smb-folder-watcher P01 | 417 | 2 tasks | 11 files |
 | Phase 05-smb-folder-watcher P03 | 163 | 2 tasks | 3 files |
 | Phase 05 P02 | 277 | 2 tasks | 5 files |
+| Phase 06-dark-light-mode-i18n P01 | 15 | 2 tasks | 7 files |
