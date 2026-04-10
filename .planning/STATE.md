@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 05
-last_updated: "2026-04-10T07:59:23.434Z"
+last_updated: "2026-04-10T08:03:03.893Z"
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 15
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -153,6 +153,8 @@ From `.planning/config.json`:
 - [Phase 06-03]: useThemeColors uses requestAnimationFrame to read CSS variables after next-themes settles class on html
 - [Phase 06-03]: lib/format.ts reads i18n.language directly so it can be used outside React components
 - [Phase 06-03]: SuccessSummary uses switch statement instead of t(key as type) cast to satisfy typed i18next TS constraints
+- [Phase 06]: check-i18n-parity.mjs uses flattenKeys recursion for arbitrary nesting depth without third-party libs
+- [Phase 06]: snapshotDir set to ./e2e/snapshots so visual regression baselines are tracked in git
 
 ## Performance Metrics
 
@@ -186,3 +188,4 @@ From `.planning/config.json`:
 | Phase 05 P02 | 277 | 2 tasks | 5 files |
 | Phase 06-dark-light-mode-i18n P01 | 15 | 2 tasks | 7 files |
 | Phase 06-dark-light-mode-i18n P03 | 9 | 2 tasks | 17 files |
+| Phase 06 P04 | 106 | 2 tasks | 4 files |

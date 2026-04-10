@@ -14,7 +14,7 @@
 - [ ] **Phase 3: KPI Layer & Dashboard** — Materialized view, 7 KPI cards, executive view, polling, stale-data banner
 - [ ] **Phase 4: Upload Page** — Browser drag-and-drop, progress, validation error summary, admin-only
 - [x] **Phase 5: SMB Folder Watcher** — Chokidar polling, file-stability check, Bull job convergence (completed 2026-04-09)
-- [ ] **Phase 6: Dark/Light Mode + i18n** — Theme toggle (persisted), DE/EN (CI check), German formatting
+- [x] **Phase 6: Dark/Light Mode + i18n** — Theme toggle (persisted), DE/EN (CI check), German formatting (completed 2026-04-10)
 - [ ] **Phase 7: User Docs Site** — `/docs` route, end-user + upload + admin guides, changelog, all in DE/EN
 - [ ] **Phase 8: Deployment Hardening** — Target OS validation, TLS (internal CA), volume perms, backup runbook
 
@@ -303,13 +303,13 @@ Plans:
 
 **Can run in parallel with:** Phase 4, Phase 5, Phase 7
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 06-01-PLAN.md — DB migration (theme/locale columns) + PATCH /api/me/preferences endpoint + UserPreferences DTO
 - [x] 06-02-PLAN.md — Dark CSS palette + KPI status tokens + i18next scaffold + translation files + typed keys
 - [x] 06-03-PLAN.md — Header theme/language toggles + useThemeColors hook + format.ts helpers + full string sweep
-- [ ] 06-04-PLAN.md — CI i18n parity check script + human verification checkpoint
+- [x] 06-04-PLAN.md — CI i18n parity check script + human verification checkpoint
 
 
 ---

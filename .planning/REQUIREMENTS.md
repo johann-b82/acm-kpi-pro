@@ -83,7 +83,7 @@
 
 - [x] **I18N-01**: The UI supports German and English.
 - [x] **I18N-02**: Users can toggle language via a control in the app header; selection is persisted per user.
-- [ ] **I18N-03**: All user-facing strings (UI, error messages, docs) are localized; a CI check fails the build if `de.json` and `en.json` key sets diverge.
+- [x] **I18N-03**: All user-facing strings (UI, error messages, docs) are localized; a CI check fails the build if `de.json` and `en.json` key sets diverge.
 - [x] **I18N-04**: German layouts are verified to accommodate longer text without truncation.
 - [x] **I18N-05**: Number, currency, and date formatting uses `Intl.NumberFormat` / `Intl.DateTimeFormat` with the appropriate locale.
 
@@ -140,7 +140,7 @@
 - [x] **TEST-01**: The CSV parser has unit tests covering the decimal-comma quirk, encoding, dates, and negative stock, with `samples/LagBes-sample.csv` as the golden fixture.
 - [x] **TEST-02**: Core KPI calculation functions have unit tests.
 - [x] **TEST-03**: At least one end-to-end Playwright test covers: login → upload file → dashboard shows updated KPI.
-- [ ] **TEST-04**: A CI check fails the build when `de.json` and `en.json` diverge.
+- [x] **TEST-04**: A CI check fails the build when `de.json` and `en.json` diverge.
 
 ## v2 Requirements (Deferred)
 
@@ -245,7 +245,7 @@
 | AUTH-08 | Phase 1 | Complete (01-05) |
 | I18N-01 | Phase 6 | Complete |
 | I18N-02 | Phase 6 | Complete |
-| I18N-03 | Phase 6 | Pending |
+| I18N-03 | Phase 6 | Complete |
 | I18N-04 | Phase 6 | Complete |
 | I18N-05 | Phase 6 | Complete |
 | THEME-01 | Phase 6 | Complete |
@@ -281,7 +281,7 @@
 | TEST-01 | Phase 2 | Complete |
 | TEST-02 | Phase 3 | Complete |
 | TEST-03 | Phase 4 | Complete |
-| TEST-04 | Phase 6 | Pending |
+| TEST-04 | Phase 6 | Complete |
 
 **Coverage:** 67/67 v1 requirements mapped — 100% ✓
 
