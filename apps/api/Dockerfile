@@ -22,10 +22,10 @@ COPY apps/api/ ./apps/api/
 COPY tsconfig.docker.json ./tsconfig.json
 
 # Build core package first (api depends on it)
-RUN cd packages/core && npx tsc --build 2>&1 || (echo "--- CORE BUILD FAILED ---" && exit 1)
+RUN npm -w packages/core run build
 
 # Build API
-RUN cd apps/api && npx tsc --build 2>&1 || (echo "--- API BUILD FAILED ---" && exit 1)
+RUN npm -w apps/api run build
 
 # ── Stage 2: Runtime ─────────────────────────────────────────────────────────
 FROM node:22-alpine

@@ -60,7 +60,7 @@ export class LDAPService implements AuthProvider {
       }
 
       const userEntry = searchEntries[0];
-      if (!userEntry.dn) throw new Error("User entry has no DN");
+      if (!userEntry || !userEntry.dn) throw new Error("User entry has no DN");
 
       // Step 3: Bind as the user to verify credentials
       const userClient = this.createClient();
