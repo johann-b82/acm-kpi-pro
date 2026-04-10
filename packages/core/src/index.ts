@@ -24,3 +24,4 @@ export type {
   KpiDeltaField,
   UploadKpiDelta,
 } from "./upload/types.js";
+export type { Theme, Locale, UserPreferences, UpdatePreferencesBody } from "./user/preferences.js";

@@ -24,6 +24,8 @@ export const users = pgTable("users", {
   role: text("role").notNull().default("Viewer"), // 'Viewer' | 'Admin'
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  theme: text("theme").notNull().default("system"),   // 'light' | 'dark' | 'system'
+  locale: text("locale").notNull().default("de"),      // 'de' | 'en'
 });
 
 /**
