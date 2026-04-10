@@ -306,8 +306,8 @@ Plans:
 **Plans:** 1/4 plans executed
 
 Plans:
-- [ ] 06-01-PLAN.md — DB migration (theme/locale columns) + PATCH /api/me/preferences endpoint + UserPreferences DTO
-- [x] 06-02-PLAN.md — Dark CSS palette + KPI status tokens + i18next scaffold + translation files + typed keys
+- [x] 06-01-PLAN.md — DB migration (theme/locale columns) + PATCH /api/me/preferences endpoint + UserPreferences DTO
+- [ ] 06-02-PLAN.md — Dark CSS palette + KPI status tokens + i18next scaffold + translation files + typed keys
 - [ ] 06-03-PLAN.md — Header theme/language toggles + useThemeColors hook + format.ts helpers + full string sweep
 - [ ] 06-04-PLAN.md — CI i18n parity check script + human verification checkpoint
 

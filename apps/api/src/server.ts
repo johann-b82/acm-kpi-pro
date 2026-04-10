@@ -6,6 +6,7 @@ import type { AppConfig } from "./config.js";
 import { checkDbConnection } from "./db/index.js";
 import { registerAdminRoutes } from "./routes/admin.js";
 import { registerAuthRoutes } from "./routes/auth.js";
+import { registerMeRoutes } from "./routes/me.js";
 import { registerUploadRoutes } from "./routes/upload.js";
 import { registerKpiRoutes } from "./kpi/routes.js";
 import { LDAPService } from "./services/ldap.service.js";
@@ -88,6 +89,9 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
 
   // KPI routes: /api/v1/kpi/summary, /api/v1/kpi/articles, /api/v1/kpi/meta (Phase 3)
   await registerKpiRoutes(server, config);
+
+  // Me routes: PATCH /api/me/preferences (Phase 6 — THEME-01, THEME-02, I18N-01, I18N-02)
+  await registerMeRoutes(server, config);
 
   // Upload route: POST /api/v1/upload (Phase 4 — UP-07, IN-02)
   await registerUploadRoutes(server, config);
