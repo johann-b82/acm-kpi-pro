@@ -1,13 +1,17 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Playwright configuration for ACM KPI Pro e2e tests (Phase 04 / TEST-03).
+ * Playwright configuration for ACM KPI Pro e2e tests (Phase 04 / TEST-03,
+ * Phase 06 / TEST-04 / I18N-04).
  *
  * Runs serially (workers: 1) because the upload tests share a single
  * Postgres database and ingesting the LagBes fixture is a non-commutative
  * side-effect. The live stack must be up before running these tests — in
  * Phase 04 this is a manual `docker compose up` / `npm run dev` prerequisite;
  * Phase 08 will wire stack startup into a webServer config for CI.
+ *
+ * Visual regression baselines (i18n-theme.spec.ts) are stored in
+ * ./e2e/snapshots/ and must be committed for CI stability.
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -15,6 +19,7 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   reporter: [["list"]],
+  snapshotDir: "./e2e/snapshots",
   use: {
     baseURL: "http://localhost:5173",
     headless: true,
@@ -25,7 +30,10 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1280, height: 720 },
+      },
     },
   ],
 });
