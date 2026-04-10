@@ -23,9 +23,12 @@ COPY tsconfig.docker.json ./tsconfig.json
 # Build core first
 RUN npx tsc --build packages/core/tsconfig.json
 
+# Verify core was built
+RUN ls -la packages/core/dist/
+
 # Build frontend (outputs to apps/frontend/dist/)
 # Run vite build directly — tsc type checking runs in CI, not in Docker.
-RUN cd apps/frontend && npx vite build 2>&1
+RUN cd apps/frontend && npx vite build 2>&1 | tee /tmp/vite.log || (cat /tmp/vite.log && exit 1)
 
 # ── Stage 2: Static files only ────────────────────────────────────────────────
 # Caddy serves from a named volume populated by the frontend-build init container.
